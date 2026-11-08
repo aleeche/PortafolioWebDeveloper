@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Gestor de Tienda de Videojuegos — Alejandro Echeverría</title>
+  <meta name="description" content="Caso de estudio: AllEliteGames, sistema web de gestión para una tienda de videojuegos, desarrollado en Java (Servlets y JSP) con MySQL bajo una arquitectura MVC.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gestor de Tienda de Videojuegos — Alejandro Echeverría">
+  <meta property="og:description" content="Caso de estudio: AllEliteGames, gestión integral de una tienda de videojuegos en Java (MVC) con MySQL.">
+  <meta property="og:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/projects/gestor-hero.jpg">
+
+  <link rel="icon" href="../assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add("js-nav");
+    (function () {
+      try {
+        if (localStorage.getItem("ae-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/sections.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
+       Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
+  <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Inicio — Alejandro Echeverría">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Alejandro Echeverría</span>
+      </a>
+      <nav class="nav" data-nav aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav__link" href="../index.html#habilidades">Habilidades</a></li>
+          <li><a class="nav__link" href="../index.html#trayectoria">Trayectoria</a></li>
+          <li><a class="nav__link" href="../index.html#proyectos">Proyectos</a></li>
+          <li><a class="nav__link" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
+
+  <main id="contenido">
+    <div class="container">
+
+      <section class="case-hero" data-reveal>
+        <a class="case-back" href="../index.html#proyectos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver a proyectos</a>
+        <h1 class="case-hero__title">Gestor de Tienda de Videojuegos</h1>
+        <p class="case-hero__tagline"><strong>AllEliteGames</strong>: aplicación web en Java (arquitectura MVC) para gestionar toda la operación de una tienda de videojuegos y consolas.</p>
+
+        <div class="chip-group case-tags">
+          <span class="chip"><span class="chip__dot"></span>Java</span>
+          <span class="chip"><span class="chip__dot"></span>JSP</span>
+          <span class="chip"><span class="chip__dot"></span>Servlets</span>
+          <span class="chip"><span class="chip__dot"></span>MySQL</span>
+        </div>
+
+        <div class="case-hero__actions">
+          <a class="btn btn--primary" href="https://github.com/aleeche/GestorTiendaVideojuegos" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Repositorio</a>
+        </div>
+
+        <div class="case-meta">
+          <div class="case-meta__item">
+            <div class="case-meta__label">Año</div>
+            <div class="case-meta__value">2025</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Mi rol</div>
+            <div class="case-meta__value">Scrum Master · Full stack</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Tipo</div>
+            <div class="case-meta__value">App web de gestión</div>
+          </div>
+        </div>
+      </section>
+
+      <img class="case-media" data-reveal src="../assets/img/projects/gestor-hero.jpg"
+        alt="Identidad de marca del proyecto AllEliteGames: logo de un mando de videojuegos con el texto «AllEliteGames — Consolas y videojuegos»." loading="lazy">
+
+      <div class="section case-body">
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Contexto</h2>
+          <p>
+            <strong>AllEliteGames</strong> es el sistema de gestión de una tienda de videojuegos y
+            consolas. Nació como proyecto académico en equipo en el Centro Educativo Técnico Laboral
+            KINAL, con una meta clara: llevar a software toda la operación del negocio, desde el
+            catálogo de productos hasta las ventas, los clientes y los proveedores.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">El problema</h2>
+          <p>
+            Un negocio así maneja muchas entidades relacionadas —productos, existencias, clientes,
+            empleados, proveedores, ventas, devoluciones, membresías— que a mano son difíciles de
+            mantener consistentes. El reto era centralizarlo todo en una aplicación web, con acceso
+            controlado y datos fiables.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Mi rol</h2>
+          <p>
+            Fui <strong>Scrum Master</strong> del equipo —coordinando la planificación, el seguimiento
+            de las tareas y las entregas por iteraciones— y, además, el mayor contribuidor de código del
+            repositorio. Participé en las tres capas de la aplicación.
+          </p>
+          <ul class="case-list">
+            <li>Coordinación del equipo bajo Scrum y del flujo de trabajo en Git (ramas por persona y por funcionalidad).</li>
+            <li>Modelado de la base de datos y de la capa de acceso a datos (DAO) con JDBC y MySQL.</li>
+            <li>Lógica del servlet controlador y las operaciones CRUD de las entidades.</li>
+            <li>Vistas en JSP y validación de formularios en el servidor.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">La solución</h2>
+          <p>
+            El sistema sigue una arquitectura <strong>MVC</strong> clásica de Java web. Un único
+            <em>servlet</em> controlador recibe cada petición, la enruta según la acción solicitada y
+            delega la persistencia en una capa de objetos de acceso a datos (<strong>DAO</strong>), uno
+            por entidad. Las vistas son páginas <strong>JSP</strong> y los datos viven en
+            <strong>MySQL</strong>, accedidos mediante <strong>JDBC</strong>.
+          </p>
+          <ul class="case-list">
+            <li>Autenticación de empleados con sesión de usuario (login mediante un servlet dedicado).</li>
+            <li>CRUD completo —listar, agregar, editar, actualizar y eliminar— sobre <strong>doce entidades</strong>: videojuegos, consolas, géneros, proveedores, tiendas, clientes, empleados, ventas, devoluciones, suscripciones, membresías y métodos de pago.</li>
+            <li>Validación en el servidor: campos obligatorios, longitudes máximas, formatos con expresiones regulares y reglas de negocio (p. ej., que la fecha fin de una suscripción no sea anterior a su inicio).</li>
+            <li>Modelo relacional que conecta las entidades entre sí: un videojuego pertenece a un género y a un proveedor; una venta enlaza cliente, empleado y método de pago.</li>
+            <li>Base de datos poblada con datos de ejemplo mediante un script SQL y procedimientos almacenados.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal style="max-width:none">
+          <h2 class="case-section__title">Galería</h2>
+          <div class="case-gallery">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/gestor-login.jpeg"
+              alt="Pantalla de inicio de sesión de AllEliteGames: logo, campos de usuario y contraseña y botón «Ingresar» sobre un fondo espacial." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/gestor-inicio.jpeg"
+              alt="Página principal tras iniciar sesión, con la barra de navegación por módulos (Clientes, Empleados, Géneros, Proveedores, Ventas) y las secciones de misión y visión." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/gestor-crud.jpeg"
+              alt="Módulo de gestión de clientes: formulario de alta a la izquierda y tabla de registros con acciones a la derecha." loading="lazy">
+          </div>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Resultados y aprendizajes</h2>
+          <p>
+            El proyecto consolidó mis bases de <strong>Java para la web</strong> y de bases de datos
+            relacionales, y me enseñó el valor de separar responsabilidades en capas —modelo, vista y
+            controlador—. Sacarlo adelante en equipo, con Git y ramas por persona, fue además una buena
+            práctica de colaboración real.
+          </p>
+          <p>
+            Si lo retomara, reforzaría la seguridad: consultas parametrizadas en todas las operaciones
+            de datos, cifrado de contraseñas y credenciales de conexión fuera del código. También
+            evolucionaría de JSP hacia una API con un frontend independiente.
+          </p>
+        </section>
+      </div>
+
+      <nav class="case-nav" aria-label="Navegación entre proyectos">
+        <a class="case-nav__link" href="veterinaria-criaturitas.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span><span class="dir">Anterior</span>Plataforma para Criaturitas Pet Shop</span>
+        </a>
+        <a class="case-nav__link case-nav__link--end" href="sistema-gestion-veterinaria.html">
+          <span><span class="dir">Siguiente</span>Sistema de Gestión Veterinaria</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="../index.html#inicio">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Alejandro Echeverría</span>
+          </a>
+          <p class="footer__brand-desc">Desarrollador Full Stack. Construyendo software con foco en la experiencia y la calidad.</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Navegación</p>
+          <ul class="footer__links">
+            <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+            <li><a href="../index.html#habilidades">Habilidades</a></li>
+            <li><a href="../index.html#proyectos">Proyectos</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Enlaces</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:alejandroecheverria826@gmail.com">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
+        <span>Hecho con HTML, CSS y JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

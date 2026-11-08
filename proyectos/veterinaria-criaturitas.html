@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Criaturitas Pet Shop — Plataforma veterinaria — Alejandro Echeverría</title>
+  <meta name="description" content="Caso de estudio: plataforma de gestión para una veterinaria real, construida como proyecto social. Cuatro microservicios, panel web y app móvil, operando con un coste de infraestructura de casi cero.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Plataforma para Criaturitas Pet Shop">
+  <meta property="og:description" content="Proyecto social: digitalizar una veterinaria que trabajaba con hojas de cálculo. Microservicios en .NET y Node.js, panel en React, app móvil en React Native.">
+  <meta property="og:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/og-image.png">
+
+  <link rel="icon" href="../assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add("js-nav");
+    (function () {
+      try {
+        if (localStorage.getItem("ae-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/sections.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
+       Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
+  <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Inicio — Alejandro Echeverría">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Alejandro Echeverría</span>
+      </a>
+
+      <nav class="nav" data-nav aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav__link" href="../index.html#habilidades">Habilidades</a></li>
+          <li><a class="nav__link" href="../index.html#trayectoria">Trayectoria</a></li>
+          <li><a class="nav__link" href="../index.html#proyectos">Proyectos</a></li>
+          <li><a class="nav__link" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
+
+  <main id="contenido">
+    <div class="container">
+
+      <!-- CABECERA DEL PROYECTO -->
+      <section class="case-hero" data-reveal>
+        <a class="case-back" href="../index.html#proyectos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver a proyectos</a>
+        <h1 class="case-hero__title">Plataforma para Criaturitas Pet Shop</h1>
+        <p class="case-hero__tagline">
+          Proyecto social: digitalizar por completo una veterinaria real que trabajaba con hojas de
+          cálculo. Cuatro microservicios, panel web y app móvil para el veterinario, funcionando en
+          producción con un coste de infraestructura de casi cero.
+        </p>
+
+        <div class="chip-group case-tags">
+          <span class="chip"><span class="chip__dot"></span>.NET 8</span>
+          <span class="chip"><span class="chip__dot"></span>Node.js</span>
+          <span class="chip"><span class="chip__dot"></span>React</span>
+          <span class="chip"><span class="chip__dot"></span>React Native</span>
+          <span class="chip"><span class="chip__dot"></span>MongoDB</span>
+          <span class="chip"><span class="chip__dot"></span>PostgreSQL</span>
+        </div>
+
+        <div class="case-meta">
+          <div class="case-meta__item">
+            <div class="case-meta__label">Año</div>
+            <div class="case-meta__value">2026</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Mi rol</div>
+            <div class="case-meta__value">Desarrollador Full Stack · Microservicio clínico</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Tipo</div>
+            <div class="case-meta__value">Proyecto social · Cliente real</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Equipo</div>
+            <div class="case-meta__value">Nexus Code · Centro Educativo Técnico Laboral KINAL</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Estado</div>
+            <div class="case-meta__value">En uso, desplegado</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARCA DEL CLIENTE
+           No se publican capturas del sistema: contiene datos reales de los
+           clientes de la veterinaria. La cabecera es su logotipo. -->
+      <div class="case-media case-media--logo" data-reveal>
+        <img src="../assets/img/projects/criaturitas-logo.png"
+          alt="Logotipo de Criaturitas Pet Shop: un círculo amarillo con un perro salchicha y el nombre de la veterinaria." loading="lazy">
+      </div>
+
+      <!-- CUERPO -->
+      <div class="section case-body">
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Contexto</h2>
+          <p>
+            Este proyecto nació de un encargo del <strong>Centro Educativo Técnico Laboral KINAL</strong>
+            con una condición poco habitual: no bastaba con programar, había que <strong>buscar un
+            lugar real al que ayudar</strong>. Con mi equipo —<strong>Nexus Code</strong>— salimos a
+            buscar un negocio pequeño que necesitara software y no pudiera pagárselo, y elegimos
+            <strong>Criaturitas Pet Shop</strong>, una veterinaria y pet shop que no tenía
+            absolutamente nada de infraestructura digital.
+          </p>
+          <p>
+            En lugar de imponerle un sistema, nos sentamos con ellos a entender cómo trabajaban de
+            verdad: cómo atendían una cita, cómo cobraban, qué anotaban de cada mascota y qué era lo
+            que más tiempo les quitaba. De esas conversaciones salió el alcance, y volvimos a
+            validarlo con ellos a medida que las piezas iban funcionando.
+          </p>
+          <p>
+            Por respeto a la privacidad de sus clientes, <strong>esta ficha no incluye capturas del
+            sistema</strong>: el panel muestra datos reales de personas y de sus mascotas. Lo único
+            que se publica aquí es el logotipo de la veterinaria, con su permiso.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">El problema</h2>
+          <p>
+            Todo el negocio vivía en <strong>hojas de cálculo</strong>. Había un archivo con los
+            clientes y sus mascotas, otro para el control de grooming en el que
+            <strong>cada visita añadía una columna nueva</strong> a la derecha —así que la hoja
+            crecía a lo ancho sin fin— y un libro de cuadre de caja con una pestaña por mes que
+            arrastraba más de año y medio de historia.
+          </p>
+          <p>Eso significaba, en el día a día:</p>
+          <ul class="case-list">
+            <li>Ningún historial clínico consultable: para saber qué le pasó a una mascota había que rastrear filas y columnas a mano.</li>
+            <li>Ninguna forma fiable de saber qué estaba cobrado y qué no, ni de cerrar la caja sin cuadrar a mano.</li>
+            <li>Ningún recordatorio de vacunas ni de citas: dependía de que alguien se acordara.</li>
+            <li>Un único archivo como punto de fallo: si se corrompía o se borraba, se perdía el negocio entero.</li>
+          </ul>
+          <p>
+            Y dos restricciones que condicionaron todo el diseño: lo que construyéramos tenía que
+            poder usarlo <strong>personal sin perfil técnico</strong> y tenía que
+            <strong>costar prácticamente cero al mes</strong>, porque una veterinaria pequeña no
+            puede sostener una factura de infraestructura.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Mi rol</h2>
+          <p>
+            Nos repartimos los microservicios y yo me hice cargo del <strong>servicio clínico</strong>,
+            el que modela el trabajo del veterinario y el que más lógica cruzada tiene con los demás.
+          </p>
+          <ul class="case-list">
+            <li>Consultas, carnet de vacunación, grooming e <strong>historial clínico unificado</strong> por mascota.</li>
+            <li>El <strong>reconciliador</strong> de operaciones pendientes: cuando una escritura hacia otro servicio falla, queda registrada y se reintenta después en lugar de perderse.</li>
+            <li>Los <strong>controles de edición auditada</strong>: si se corrige un acto clínico ya facturado, el cobro emitido no se sobreescribe, se genera una nota de ajuste con su motivo.</li>
+            <li>La <strong>idempotencia</strong> de las altas, para que un doble clic o un reintento tras un tiempo de espera no dupliquen un registro ni repitan sus efectos.</li>
+            <li>Participé además en el panel web en React y en la definición de la arquitectura común.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal style="max-width:none">
+          <h2 class="case-section__title">La arquitectura</h2>
+          <p style="max-width:74ch">
+            Cuatro microservicios y dos clientes. El servicio de identidad es el único que emite
+            tokens; los otros tres solo los validan, compartiendo secreto, <em>issuer</em> y
+            <em>audience</em>. Existe también un <strong>API Gateway</strong> en .NET con YARP —punto
+            único de entrada, CORS centralizado y <em>health checks</em>— que se conserva pero hoy
+            está desactivado: en producción el panel habla directo con cada servicio.
+          </p>
+
+          <div class="case-arch">
+            <div class="case-arch__item">
+              <p class="case-arch__name">Identidad y acceso</p>
+              <p class="case-arch__stack">.NET 8 · PostgreSQL</p>
+              <p class="case-arch__desc">
+                Login, roles y gestión de usuarios, con Clean Architecture, contraseñas con Argon2id
+                y JWT. Tiene una réplica en Node con el mismo contrato, que es la que corre en
+                producción.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">Registro</p>
+              <p class="case-arch__stack">Node · Express · MongoDB</p>
+              <p class="case-arch__desc">
+                Fuente de verdad de clientes, mascotas y citas, más el registro de dispositivos para
+                las notificaciones push.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">Clínico</p>
+              <p class="case-arch__stack">Node · Express · MongoDB</p>
+              <p class="case-arch__desc">
+                Consultas, vacunas, grooming e historial unificado. Aquí vive el reconciliador de
+                operaciones pendientes. Es la parte que desarrollé.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">Finanzas</p>
+              <p class="case-arch__stack">Node · Express · MongoDB</p>
+              <p class="case-arch__desc">
+                Facturación, cierre de caja, catálogo, inventario, precios de laboratorio y
+                generación y envío de PDF.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">Panel web</p>
+              <p class="case-arch__stack">React 19 · Vite · Zustand</p>
+              <p class="case-arch__desc">
+                La herramienta del personal: registro, clínica, finanzas y administración, con la
+                interfaz recortada según el rol de quien entra.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">App del veterinario</p>
+              <p class="case-arch__stack">Expo · React Native</p>
+              <p class="case-arch__desc">
+                Agenda de citas por día, mes y año, con recordatorios locales y notificaciones push
+                cuando cambia el estado de una cita.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Decisiones técnicas</h2>
+          <ul class="case-list">
+            <li>
+              <strong>Integridad referencial en caliente.</strong> Los servicios clínico y de
+              finanzas no guardan copia de clientes ni mascotas: validan los identificadores
+              llamando por HTTP al servicio de registro y reenviando el token del usuario. Menos
+              datos duplicados, a cambio de un orden de arranque explícito.
+            </li>
+            <li>
+              <strong>Escrituras cruzadas resilientes.</strong> Cerrar una cita o descontar
+              inventario ocurre <em>después</em> de guardar lo propio y no se revierte si el otro
+              servicio no responde: la operación queda marcada como pendiente y un reconciliador la
+              reintenta. Se puede disparar a mano, por cron externo o por un trabajo en proceso.
+            </li>
+            <li>
+              <strong>Idempotencia de extremo a extremo.</strong> Todas las altas aceptan una clave
+              de idempotencia y responden con el registro original si la clave ya existe. El
+              reintento es seguro porque los efectos también lo son: cerrar una cita es una máquina
+              de estados que no reabre estados terminales, y el descuento de stock se deduplica con
+              una clave estable.
+            </li>
+            <li>
+              <strong>La factura es append-only.</strong> Corregir un acto clínico ya cobrado no
+              reescribe la factura emitida: se registra una <strong>nota de ajuste</strong> ligada,
+              con el delta y el motivo, y el importe vigente es el agregado. Un cobro emitido queda
+              como evidencia, igual que en contabilidad.
+            </li>
+            <li>
+              <strong>Borrado lógico en todo el sistema.</strong> Nada se borra físicamente. En una
+              clínica, un historial que desaparece es peor que un registro de más.
+            </li>
+            <li>
+              <strong>Permisos en un solo sitio.</strong> Tres roles —administración, recepción y
+              veterinario— con el recorte de la interfaz centralizado en un único punto, y la
+              autorización real siempre impuesta por el backend.
+            </li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Producción con presupuesto cero</h2>
+          <p>
+            La restricción de coste no era un detalle: era un requisito. Todo el sistema corre hoy
+            sobre planes gratuitos, y las piezas que esos planes no cubren las resolvimos nosotros.
+          </p>
+          <ul class="case-list">
+            <li>Panel y los cuatro servicios en <strong>Vercel</strong>, cada uno como proyecto serverless independiente del mismo repositorio.</li>
+            <li><strong>Supabase</strong> para PostgreSQL y <strong>MongoDB Atlas</strong> para la base compartida de los tres servicios de negocio.</li>
+            <li>El reconciliador se dispara con un <strong>cron de GitHub Actions</strong> cada quince minutos, porque en serverless no hay un proceso vivo que lo haga.</li>
+            <li>El plan gratuito de Atlas no incluye copias de seguridad, así que montamos un <strong>backup diario</strong>, también con GitHub Actions, con cifrado opcional y su guía de restauración.</li>
+            <li>Notificaciones push del móvil vía <strong>Firebase Cloud Messaging</strong>, compiladas con EAS.</li>
+          </ul>
+          <p>
+            El precio de esa decisión es un arranque en frío de uno a tres segundos tras un rato sin
+            uso. Lo asumimos a conciencia: para una clínica pequeña, esperar un segundo de vez en
+            cuando es mejor negocio que una cuota mensual. Por eso mismo conservamos el gateway y los
+            <em>Dockerfile</em>: si algún día pueden pagar un servidor encendido, el camino ya está
+            hecho.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Resultados y aprendizajes</h2>
+          <p>
+            La veterinaria pasó de un montón de hojas de cálculo a una plataforma con historial por
+            mascota, caja que cuadra sola, inventario, facturación con respaldo en PDF y una agenda
+            que el veterinario lleva en el teléfono. Y sin factura mensual que pagar.
+          </p>
+          <p>
+            Técnicamente, este proyecto me enseñó lo que no se aprende en un ejercicio de clase:
+            que en un sistema repartido <strong>lo difícil es lo que pasa cuando algo falla a mitad
+            de camino</strong>. De ahí salió todo lo interesante —la reconciliación, la idempotencia,
+            la factura append-only—: no de querer usar patrones, sino de preguntarnos qué ocurre si
+            el segundo servicio no contesta justo después de haber guardado el primero.
+          </p>
+          <p>
+            Y me enseñó algo que no es código: que el requisito más valioso casi nunca está en el
+            enunciado, está en escuchar a quien va a usar el sistema. Varias de las decisiones que
+            más nos gustan —que nada se borre, que un cobro emitido no se pueda reescribir— salieron
+            de entender cómo trabajaban ellos, no de un patrón de arquitectura.
+          </p>
+        </section>
+      </div>
+
+      <!-- NAVEGACIÓN ENTRE PROYECTOS -->
+      <nav class="case-nav" aria-label="Navegación entre proyectos">
+        <a class="case-nav__link" href="../index.html#proyectos">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span><span class="dir">Volver a</span>Todos los proyectos</span>
+        </a>
+        <a class="case-nav__link case-nav__link--end" href="gestor-tienda-videojuegos.html">
+          <span><span class="dir">Siguiente</span>Gestor de Tienda de Videojuegos</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="../index.html#inicio">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Alejandro Echeverría</span>
+          </a>
+          <p class="footer__brand-desc">Desarrollador Full Stack. Construyendo software con foco en la experiencia y la calidad.</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Navegación</p>
+          <ul class="footer__links">
+            <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+            <li><a href="../index.html#habilidades">Habilidades</a></li>
+            <li><a href="../index.html#proyectos">Proyectos</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Enlaces</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:alejandroecheverria826@gmail.com">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
+        <span>Hecho con HTML, CSS y JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

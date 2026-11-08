@@ -1,0 +1,143 @@
+/* ============================================================
+   TOKENS — Settings layer
+   Variables de diseño. El modo oscuro solo reasigna estas
+   variables; ningún componente se duplica.
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* --- Neutrales (cálidos) --- */
+  --canvas: #EFEEEC;
+  --surface: #F8F7F5;
+  --surface-2: #FCFBF9;
+  --sunken: #E7E6E3;
+  --ink-strong: #22201E;
+  --ink: #3C3A37;
+  --ink-muted: #79766F;
+  --hairline: #E2E0DC;
+
+  /* --- Acento (índigo) --- */
+  --accent: #4B4EBD;
+  --accent-strong: #3D3FA3;
+  --accent-soft: #EAEAF7;
+  --on-accent: #FFFFFF;
+
+  /* Glow ambiental del puntero (radial) */
+  --glow: rgba(75, 78, 189, 0.10);
+
+  /* --- Semánticos (independientes del acento) --- */
+  --ok: #3E8E5A;
+  --warn: #B7791F;
+  --err: #C0553B;
+
+  /* Lienzo para logotipos de clientes. Deliberadamente claro en AMBOS temas:
+     una marca ajena no se puede recolorear, y sobre fondo oscuro perdería
+     contraste. Por eso [data-theme="dark"] repite este mismo valor. */
+  --logo-plate: #FCFBF9;
+
+  /* --- Marca (monograma AE) ---
+     El logotipo como MÁSCARA, no como imagen: así el color lo pone el
+     componente (`background`) y sigue al tema sin duplicar archivos.
+     Fuente del trazado: assets/img/logo-ae.svg. Si el logo cambia, se
+     actualizan los dos a la vez. */
+  --logo-ae: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 68.65'%3E%3Cpath d='M40.48 0 42.86 2.38 55.16 25 56.35 24.6 60.32 17.06 100 17.06 95.24 25.4 66.27 25.4 58.33 38.89 84.52 38.89 82.94 42.46 79.76 47.22 52.78 47.22 45.24 59.52 83.73 59.92 83.33 61.51 78.57 68.65 29.76 68.65 50.4 34.52 40.87 17.86 28.57 38.1 28.57 38.89 44.44 38.89 40.08 46.83 23.02 47.22 10.32 68.65 0 68.65 34.92 10.71Z'/%3E%3C/svg%3E");
+
+  /* Proporción real del monograma (ancho ÷ alto). Evita repetir el número
+     mágico cada vez que se dimensiona la marca. */
+  --logo-ae-ratio: 1.4566;
+
+  /* --- Sombras (soft UI: suaves + brillo superior) --- */
+  --hi: inset 0 1px 0 rgba(255, 255, 255, .75);
+  --e1: 0 1px 2px rgba(38, 34, 28, .05), 0 2px 8px rgba(38, 34, 28, .04);
+  --e2: 0 2px 4px rgba(38, 34, 28, .04), 0 10px 24px rgba(38, 34, 28, .07);
+  --e3: 0 6px 12px rgba(38, 34, 28, .06), 0 22px 44px rgba(38, 34, 28, .10);
+  --pressed: inset 0 2px 5px rgba(38, 34, 28, .10), inset 0 -1px 0 rgba(255, 255, 255, .5);
+
+  /* --- Radios --- */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 36px;
+  --r-pill: 999px;
+
+  /* --- Espaciado (base 4px) --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* --- Tipografía --- */
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --fs-display: clamp(2.6rem, 6vw, 4.2rem);
+  --fs-h1: clamp(2rem, 4vw, 3rem);
+  --fs-h2: clamp(1.8rem, 3.5vw, 2.6rem);
+  --fs-h3: 1.5rem;
+  --fs-h4: 1.25rem;
+  --fs-body-lg: 1.1875rem;
+  --fs-body: 1.0625rem;
+  --fs-sm: 0.9375rem;
+  --fs-caption: 0.8125rem;
+
+  /* --- Layout --- */
+  --container: 1140px;
+  --container-pad: clamp(20px, 4vw, 48px);
+  --header-h: 76px; /* respaldo; nav.js lo actualiza con la altura real del header */
+
+  /* --- Movimiento --- */
+  --dur-fast: 140ms;
+  --dur: 240ms;
+  --dur-slow: 420ms;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+
+  /* --- Capas (z-index) --- */
+  --z-header: 100;
+  --z-menu: 200;
+  --z-modal: 1000;
+  --z-veil: 2000;
+}
+
+/* ============================================================
+   MODO OSCURO — paleta específica (no es una inversión)
+   ============================================================ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #191816;
+  --surface: #221F1D;
+  --surface-2: #262320;
+  --sunken: #100F0E;
+  --ink-strong: #F4F2EE;
+  --ink: #D6D3CD;
+  --ink-muted: #9C978F;
+  --hairline: #34312C;
+
+  --accent: #9A9CF2;
+  --accent-strong: #B3B5F8;
+  --accent-soft: rgba(154, 156, 242, .16);
+  --on-accent: #16151A;
+
+  --glow: rgba(154, 156, 242, 0.16);
+
+  --ok: #5FB07C;
+  --warn: #D6A24A;
+  --err: #E0715A;
+
+  /* Mismo valor que en claro: los logos de clientes no se invierten. */
+  --logo-plate: #FCFBF9;
+
+  --hi: inset 0 1px 0 rgba(255, 255, 255, .05);
+  --e1: 0 1px 2px rgba(0, 0, 0, .40), 0 2px 8px rgba(0, 0, 0, .30);
+  --e2: 0 2px 4px rgba(0, 0, 0, .35), 0 10px 24px rgba(0, 0, 0, .45);
+  --e3: 0 6px 12px rgba(0, 0, 0, .40), 0 22px 44px rgba(0, 0, 0, .55);
+  --pressed: inset 0 2px 5px rgba(0, 0, 0, .50), inset 0 -1px 0 rgba(255, 255, 255, .04);
+}

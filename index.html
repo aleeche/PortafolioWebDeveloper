@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Alejandro Echeverría — Desarrollador Full Stack</title>
+  <meta name="description" content="Portafolio de Alejandro Echeverría Garrido, desarrollador Full Stack. Proyectos, habilidades y trayectoria en Java, JavaScript, C#, React, Node.js y .NET.">
+  <meta name="author" content="Alejandro Echeverría Garrido">
+
+  <!-- Open Graph (previsualización al compartir el enlace) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Alejandro Echeverría — Desarrollador Full Stack">
+  <meta property="og:description" content="Portafolio profesional: proyectos full stack, habilidades y trayectoria.">
+  <!-- og:image va en ABSOLUTO a proposito: LinkedIn, Facebook y WhatsApp no
+       resuelven rutas relativas y dejarian la tarjeta sin imagen.
+       Si algun dia se pone dominio propio, hay que cambiar la base en las 6
+       paginas (index + proyectos/*.html): busca "aleeche.github.io". -->
+  <meta property="og:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Portafolio de Alejandro Echeverría — Desarrollador Full Stack">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/og-image.png">
+
+  <!-- Favicons (monograma AE) -->
+  <link rel="icon" href="assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+
+  <!-- Anti-FOUC: aplica el tema guardado antes del primer pintado. Claro por defecto.
+       También marca que hay JS (js-nav) para activar el velo de transición. -->
+  <script>
+    document.documentElement.classList.add("js-nav");
+    (function () {
+      try {
+        if (localStorage.getItem("ae-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) { /* sin localStorage: se queda en claro */ }
+    })();
+  </script>
+
+  <!-- Google Fonts: Space Grotesk (títulos) + Inter (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (iconografía) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CSS por capas (ITCSS), carga en paralelo -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
+       Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
+  <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="#inicio" aria-label="Inicio — Alejandro Echeverría">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Alejandro Echeverría</span>
+      </a>
+
+      <nav class="nav" data-nav aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#sobre-mi" data-spy>Sobre mí</a></li>
+          <li><a class="nav__link" href="#habilidades" data-spy>Habilidades</a></li>
+          <li><a class="nav__link" href="#trayectoria" data-spy>Trayectoria</a></li>
+          <li><a class="nav__link" href="#proyectos" data-spy>Proyectos</a></li>
+          <li><a class="nav__link" href="#contacto" data-spy>Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
+
+  <main id="contenido">
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero section" id="inicio">
+      <div class="container hero__grid">
+        <div class="hero__intro">
+          <p class="eyebrow" data-reveal>Desarrollador Full Stack</p>
+          <h1 class="hero__title" data-reveal>Alejandro Echeverría</h1>
+          <p class="hero__subtitle" data-reveal>
+            Transformo ideas en aplicaciones completas, desde el diseño de la base de datos hasta una experiencia de usuario intuitiva.
+          </p>
+          <div class="hero__actions" data-reveal>
+            <a class="btn btn--primary" href="#proyectos">
+              Ver proyectos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn--secondary" href="#contacto">Contáctame</a>
+          </div>
+          <div class="hero__social social" data-reveal>
+            <a class="social__link" href="https://github.com/aleeche" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
+            </a>
+            <a class="social__link" href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+            </a>
+            <a class="social__link" href="mailto:alejandroecheverria826@gmail.com" aria-label="Enviar correo">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Visual gráfico (fallback). Para usar foto, sustituye este bloque por:
+             <div class="hero-visual"><img src="assets/img/alejandro.jpg" alt="Retrato de Alejandro Echeverría" width="440" height="440" style="border-radius:var(--r-2xl);box-shadow:var(--e3),var(--hi)"></div> -->
+        <div class="hero-visual" data-reveal role="img" aria-label="Composición gráfica abstracta del portafolio">
+          <!-- Monograma de fondo. El trazado es un ÚNICO contorno cerrado, así
+               que al cargar se dibuja de una sola línea continua y luego se
+               asienta en un relleno tenue. Ver .hero-visual__mark en sections.css. -->
+          <svg class="hero-visual__mark" viewBox="-1.2 -1.2 102.4 71.05"
+               aria-hidden="true" focusable="false">
+            <path class="hero-visual__mark-path" pathLength="1"
+                  d="M40.48 0 42.86 2.38 55.16 25 56.35 24.6 60.32 17.06 100 17.06 95.24 25.4 66.27 25.4 58.33 38.89 84.52 38.89 82.94 42.46 79.76 47.22 52.78 47.22 45.24 59.52 83.73 59.92 83.33 61.51 78.57 68.65 29.76 68.65 50.4 34.52 40.87 17.86 28.57 38.1 28.57 38.89 44.44 38.89 40.08 46.83 23.02 47.22 10.32 68.65 0 68.65 34.92 10.71Z"/>
+          </svg>
+          <div class="hero-visual__window" aria-hidden="true">
+            <div class="hero-visual__bar"><span></span><span></span><span></span></div>
+            <div class="hero-visual__line" style="width:90%"></div>
+            <div class="hero-visual__line hero-visual__line--accent" style="width:60%"></div>
+            <div class="hero-visual__line" style="width:78%"></div>
+            <div class="hero-visual__line" style="width:45%"></div>
+          </div>
+          <div class="hero-visual__chip" aria-hidden="true"><span class="dot"></span> Desplegado</div>
+          <div class="hero-visual__badge" aria-hidden="true">
+            <div class="num">4+</div>
+            <div class="label">proyectos</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SOBRE MÍ ==================== -->
+    <section class="section" id="sobre-mi">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="eyebrow">Sobre mí</p>
+          <h2 class="section__title">Desarrollo Full Stack con enfoque en trabajo en equipo</h2>
+        </div>
+
+        <div class="about__grid">
+          <figure class="about__photo" data-reveal>
+            <img src="assets/img/programador-foto.png"
+                 alt="Retrato de Alejandro Echeverría Garrido, desarrollador Full Stack"
+                 width="500" height="500" loading="lazy" decoding="async">
+          </figure>
+
+          <div class="about__body" data-reveal>
+            <p>
+              Soy Alejandro Echeverría Garrido, Perito en Computación y desarrollador con enfoque Full Stack.
+              Me apasiona participar en todas las etapas del desarrollo de software, 
+              desde el diseño de bases de datos y la lógica del servidor hasta la creación de interfaces intuitivas y funcionales.
+            </p>
+            <p>
+              En proyectos académicos he desempeñado el rol de <strong>Scrum Master</strong>,
+              coordinando equipos, organizando tareas y fomentando una comunicación
+              efectiva para alcanzar los objetivos del proyecto.
+            </p>
+            <p>
+              Busco sumarme a un equipo donde pueda construir soluciones de calidad
+              y seguir creciendo profesionalmente como desarrollador Full Stack.
+            </p>
+          </div>
+
+          <!-- Ficha de datos personales -->
+          <aside class="card ficha" data-reveal aria-label="Información personal">
+            <div class="ficha__row">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+              <div>
+                <div class="ficha__label">Ubicación</div>
+                <div class="ficha__value">Ciudad de Guatemala, Guatemala</div>
+              </div>
+            </div>
+            <div class="ficha__row">
+              <i class="fa-solid fa-language" aria-hidden="true"></i>
+              <div>
+                <div class="ficha__label">Idiomas</div>
+                <div class="ficha__value">Español (nativo) · Inglés (B1)</div>
+              </div>
+            </div>
+            <div class="ficha__row">
+              <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+              <div>
+                <div class="ficha__label">Formación</div>
+                <div class="ficha__value">Perito en Computación (graduado)</div>
+              </div>
+            </div>
+            <div class="ficha__row">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+              <div>
+                <div class="ficha__label">Especialidad</div>
+                <div class="ficha__value">Desarrollo Full Stack</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== HABILIDADES ==================== -->
+    <section class="section" id="habilidades">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="eyebrow">Stack técnico</p>
+          <h2 class="section__title">Habilidades</h2>
+          <p class="section__intro">Las tecnologías con las que trabajo, organizadas por área.</p>
+        </div>
+
+        <!-- Nueve tarjetas: cierran la rejilla en 3 filas de 3 en escritorio, y el
+             orden agrupa por capa —cliente, servidor/datos, operación—.
+             Cada chip está respaldado por al menos un proyecto de la sección
+             siguiente; si se añade uno nuevo, conviene revisar esta lista. -->
+        <div class="skills__grid">
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Lenguajes</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>Java</span>
+              <span class="chip"><span class="chip__dot"></span>JavaScript</span>
+              <span class="chip"><span class="chip__dot"></span>C#</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-palette" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Frontend</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>HTML5</span>
+              <span class="chip"><span class="chip__dot"></span>CSS3</span>
+              <span class="chip"><span class="chip__dot"></span>React</span>
+              <span class="chip"><span class="chip__dot"></span>Canvas API</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Móvil</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>React Native</span>
+              <span class="chip"><span class="chip__dot"></span>Expo</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-server" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Backend</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>Node.js</span>
+              <span class="chip"><span class="chip__dot"></span>Express</span>
+              <span class="chip"><span class="chip__dot"></span>.NET 8</span>
+              <span class="chip"><span class="chip__dot"></span>JSP</span>
+              <span class="chip"><span class="chip__dot"></span>Servlets</span>
+              <span class="chip"><span class="chip__dot"></span>JWT</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-desktop" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Escritorio</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>JavaFX</span>
+              <span class="chip"><span class="chip__dot"></span>JasperReports</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-database" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Bases de datos</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>MySQL</span>
+              <span class="chip"><span class="chip__dot"></span>PostgreSQL</span>
+              <span class="chip"><span class="chip__dot"></span>MongoDB</span>
+              <span class="chip"><span class="chip__dot"></span>JDBC</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Despliegue</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>Vercel</span>
+              <span class="chip"><span class="chip__dot"></span>Firebase</span>
+              <span class="chip"><span class="chip__dot"></span>Supabase</span>
+              <span class="chip"><span class="chip__dot"></span>GitHub Actions</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Arquitectura</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>Microservicios</span>
+              <span class="chip"><span class="chip__dot"></span>MVC</span>
+              <span class="chip"><span class="chip__dot"></span>REST</span>
+            </div>
+          </article>
+
+          <article class="card skill-card" data-reveal>
+            <div class="skill-card__head">
+              <span class="skill-card__icon"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></span>
+              <h3 class="skill-card__title">Herramientas</h3>
+            </div>
+            <div class="chip-group">
+              <span class="chip"><span class="chip__dot"></span>Git</span>
+              <span class="chip"><span class="chip__dot"></span>Docker</span>
+              <span class="chip"><span class="chip__dot"></span>Postman</span>
+              <span class="chip"><span class="chip__dot"></span>SCRUM</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TRAYECTORIA ==================== -->
+    <section class="section" id="trayectoria">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="eyebrow">Recorrido</p>
+          <h2 class="section__title">Trayectoria</h2>
+          <p class="section__intro">Formación y experiencia en una misma línea de tiempo.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline__item" data-reveal>
+            <div class="timeline__meta">
+              <span class="timeline__date">2024 — 2026</span>
+              <span class="badge">Educación</span>
+            </div>
+            <h3 class="timeline__title">Perito en Computación</h3>
+            <p class="timeline__org">Centro Educativo Técnico Laboral KINAL</p>
+            <p class="timeline__desc">
+              Carrera de Perito en Informática: formación técnica en desarrollo de software, bases
+              de datos, desarrollo web, algoritmos y buenas prácticas de programación. Graduado en 2026.
+            </p>
+          </div>
+
+          <div class="timeline__item" data-reveal>
+            <div class="timeline__meta">
+              <span class="timeline__date">2025 — 2026</span>
+              <span class="badge">Experiencia</span>
+            </div>
+            <h3 class="timeline__title">Scrum Master</h3>
+            <p class="timeline__org">NexusBank y Gestor de Tienda de Videojuegos</p>
+            <p class="timeline__desc">
+              Lideré equipos de desarrollo en dos proyectos académicos aplicando la metodología
+              Scrum. Coordiné la planificación del trabajo, facilité las ceremonias y di seguimiento
+              al backlog, promoviendo la comunicación entre los integrantes.
+            </p>
+          </div>
+
+          <div class="timeline__item" data-reveal>
+            <div class="timeline__meta">
+              <span class="timeline__date">2025 — Actualidad</span>
+              <span class="badge">Experiencia</span>
+            </div>
+            <h3 class="timeline__title">Desarrollador Full Stack</h3>
+            <p class="timeline__org">Proyectos académicos y personales</p>
+            <p class="timeline__desc">
+              Desarrollo aplicaciones Full Stack utilizando Java, JavaScript, C#, Node.js, .NET y
+              React, integrando bases de datos relacionales y NoSQL, control de versiones con Git y
+              contenedores con Docker.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROYECTOS ==================== -->
+    <section class="section" id="proyectos">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <p class="eyebrow">Trabajo seleccionado</p>
+          <h2 class="section__title">Proyectos destacados</h2>
+          <p class="section__intro">
+            Una selección de sistemas full stack donde participé en arquitectura, desarrollo y
+            coordinación de equipo.
+          </p>
+        </div>
+
+        <!-- Proyecto destacado (imagen a la izquierda) -->
+        <article class="card featured" data-reveal>
+          <!-- Sin capturas del sistema: contiene datos reales de clientes de
+               la veterinaria. Solo se muestra su logotipo. -->
+          <div class="featured__thumb featured__thumb--logo">
+            <img src="assets/img/projects/criaturitas-logo.png"
+              alt="Logotipo de Criaturitas Pet Shop: un círculo amarillo con un perro salchicha y el nombre de la veterinaria." loading="lazy">
+          </div>
+          <div class="featured__body">
+            <span class="badge"><i class="fa-solid fa-star" aria-hidden="true"></i> Destacado</span>
+            <h3 class="featured__title">Plataforma para Criaturitas Pet Shop</h3>
+            <p class="featured__desc">
+              Proyecto social: digitalizamos una veterinaria real que trabajaba con hojas de cálculo.
+              Cuatro microservicios, panel web y app móvil en uso. Desarrollé el servicio clínico,
+              el que más lógica cruzada tiene con los demás.
+            </p>
+            <div class="chip-group project-card__tags">
+              <span class="chip"><span class="chip__dot"></span>.NET 8</span>
+              <span class="chip"><span class="chip__dot"></span>Node.js</span>
+              <span class="chip"><span class="chip__dot"></span>React</span>
+              <span class="chip"><span class="chip__dot"></span>PostgreSQL</span>
+            </div>
+            <div class="featured__cta">
+              <a class="btn btn--primary" href="proyectos/veterinaria-criaturitas.html">
+                Ver caso de estudio <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Resto de proyectos -->
+        <div class="projects__grid">
+          <article class="card project-card" data-reveal>
+            <div class="project-card__thumb">
+              <img src="assets/img/projects/gestor-hero.jpg"
+                alt="Identidad de marca de AllEliteGames: un mando de videojuegos azul dentro de un anillo circular sobre fondo oscuro, con el texto «AllEliteGames — Consolas y videojuegos»." loading="lazy">
+            </div>
+            <div class="project-card__body">
+              <h4>Gestor de Tienda de Videojuegos</h4>
+              <p class="project-card__desc">Sistema web en Java (MVC) para gestionar el catálogo, las ventas, los clientes y los proveedores de una tienda de videojuegos. Coordiné el equipo como Scrum Master.</p>
+              <div class="chip-group project-card__tags">
+                <span class="chip"><span class="chip__dot"></span>Java</span>
+                <span class="chip"><span class="chip__dot"></span>MySQL</span>
+              </div>
+              <a class="project-card__link" href="proyectos/gestor-tienda-videojuegos.html">
+                Ver caso <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="card project-card" data-reveal>
+            <div class="project-card__thumb">
+              <img src="assets/img/projects/clinic-hero.jpeg"
+                alt="Módulo de gestión de mascotas de ClinicVetSanus: barra lateral de acciones, formulario de la mascota y tabla de registros." loading="lazy">
+            </div>
+            <div class="project-card__body">
+              <h4>Sistema de Gestión Veterinaria</h4>
+              <p class="project-card__desc">Aplicación de escritorio (Java + JavaFX) para gestionar pacientes, citas, historiales y facturación de una clínica veterinaria.</p>
+              <div class="chip-group project-card__tags">
+                <span class="chip"><span class="chip__dot"></span>Java</span>
+                <span class="chip"><span class="chip__dot"></span>JavaFX</span>
+              </div>
+              <a class="project-card__link" href="proyectos/sistema-gestion-veterinaria.html">
+                Ver caso <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="card project-card" data-reveal>
+            <div class="project-card__thumb">
+              <img src="assets/img/projects/ahorcado-hero.jpg"
+                alt="Partida del Juego del Ahorcado en el nivel difícil: el muñeco a medio dibujar, la palabra oculta y el teclado virtual en pantalla." loading="lazy">
+            </div>
+            <div class="project-card__body">
+              <h4>Juego del Ahorcado</h4>
+              <p class="project-card__desc">Clásico juego de palabras con lógica de estado e interfaz interactiva.</p>
+              <div class="chip-group project-card__tags">
+                <span class="chip"><span class="chip__dot"></span>JavaScript</span>
+              </div>
+              <a class="project-card__link" href="proyectos/juego-del-ahorcado.html">
+                Ver caso <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Cierre de la sección: mismo formato ancho que el destacado, pero con
+             la imagen en la columna derecha. El DOM mantiene la imagen primero
+             (así en móvil queda arriba, como en el destacado); la inversión la
+             hace la rejilla en `sections.css`. -->
+        <article class="card featured featured--reverse" data-reveal>
+          <div class="featured__thumb featured__thumb--img">
+            <img src="assets/img/projects/bancario-hero.jpg"
+              alt="Panel operativo de NexusBank: barra lateral con los módulos del banco y tarjetas de acceso a gestión de usuarios, cuentas, depósitos, divisas, auditoría y ranking." loading="lazy">
+          </div>
+          <div class="featured__body">
+            <h3 class="featured__title">Sistema Bancario de Microservicios</h3>
+            <p class="featured__desc">
+              <strong>NexusBank</strong>: cuatro microservicios, panel web y app móvil, con
+              contabilidad por doble partida y desplegado en producción. Coordiné el equipo como
+              Scrum Master y desarrollé dos de los servicios.
+            </p>
+            <div class="chip-group project-card__tags">
+              <span class="chip"><span class="chip__dot"></span>.NET 8</span>
+              <span class="chip"><span class="chip__dot"></span>Node.js</span>
+              <span class="chip"><span class="chip__dot"></span>React</span>
+              <span class="chip"><span class="chip__dot"></span>MongoDB</span>
+            </div>
+            <div class="featured__cta">
+              <a class="btn btn--primary" href="proyectos/sistema-bancario-multiservicio.html">
+                Ver caso de estudio <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACTO ==================== -->
+    <section class="section" id="contacto">
+      <div class="container">
+        <div class="contact__grid">
+          <div data-reveal>
+            <p class="eyebrow">Contacto</p>
+            <h2 class="section__title">¿Trabajamos juntos?</h2>
+            <p class="contact__lead">
+              Estoy disponible para nuevas oportunidades como desarrollador Full Stack. Escríbeme y
+              te responderé lo antes posible.
+            </p>
+            <div class="contact__methods">
+              <a class="contact__method" href="mailto:alejandroecheverria826@gmail.com">
+                <!-- <wbr>: en pantallas estrechas el correo se parte antes de la @, no en mitad del usuario -->
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i> <span>alejandroecheverria826<wbr>@gmail.com</span>
+              </a>
+              <a class="contact__method" href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> LinkedIn
+              </a>
+              <a class="contact__method" href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </div>
+
+          <!-- Formspree activo. El envío se hace por fetch (AJAX) desde js/modules/form.js → initForm. -->
+          <form class="card contact__form" data-contact-form action="https://formspree.io/f/mzdnpaor" method="POST" novalidate>
+            <!-- Anti-spam (honeypot de Formspree): debe permanecer vacío -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" hidden>
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portafolio">
+            <div class="field">
+              <label class="field__label" for="nombre">Nombre</label>
+              <input class="field__control" id="nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="name">
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label class="field__label" for="email">Correo electrónico</label>
+              <input class="field__control" id="email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email">
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label class="field__label" for="mensaje">Mensaje</label>
+              <textarea class="field__control" id="mensaje" name="mensaje" placeholder="Cuéntame en qué puedo ayudar…"></textarea>
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+            <button class="btn btn--primary" type="submit">
+              Enviar mensaje <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            </button>
+            <p class="form__status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="#inicio">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Alejandro Echeverría</span>
+          </a>
+          <p class="footer__brand-desc">Desarrollador Full Stack. Construyendo software con foco en la experiencia y la calidad.</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Navegación</p>
+          <ul class="footer__links">
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#habilidades">Habilidades</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Enlaces</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:alejandroecheverria826@gmail.com">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
+        <span>Hecho con HTML, CSS y JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

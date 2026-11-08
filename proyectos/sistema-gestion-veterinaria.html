@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sistema de Gestión Veterinaria — Alejandro Echeverría</title>
+  <meta name="description" content="Caso de estudio: ClinicVetSanus, aplicación de escritorio en Java + JavaFX (MVC) para gestionar una clínica veterinaria —pacientes, citas, historiales, facturación y reportes PDF— con MySQL.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Sistema de Gestión Veterinaria — Alejandro Echeverría">
+  <meta property="og:description" content="Caso de estudio: ClinicVetSanus, gestión integral de una clínica veterinaria en Java + JavaFX con MySQL y reportes PDF.">
+  <meta property="og:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/projects/clinic-hero.jpeg">
+
+  <link rel="icon" href="../assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add("js-nav");
+    (function () {
+      try {
+        if (localStorage.getItem("ae-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/sections.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
+       Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
+  <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Inicio — Alejandro Echeverría">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Alejandro Echeverría</span>
+      </a>
+      <nav class="nav" data-nav aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav__link" href="../index.html#habilidades">Habilidades</a></li>
+          <li><a class="nav__link" href="../index.html#trayectoria">Trayectoria</a></li>
+          <li><a class="nav__link" href="../index.html#proyectos">Proyectos</a></li>
+          <li><a class="nav__link" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
+
+  <main id="contenido">
+    <div class="container">
+
+      <section class="case-hero" data-reveal>
+        <a class="case-back" href="../index.html#proyectos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver a proyectos</a>
+        <h1 class="case-hero__title">Sistema de Gestión Veterinaria</h1>
+        <p class="case-hero__tagline"><strong>ClinicVetSanus</strong>: aplicación de escritorio en Java + JavaFX para digitalizar toda la operación de una clínica veterinaria, con reportes en PDF.</p>
+
+        <div class="chip-group case-tags">
+          <span class="chip"><span class="chip__dot"></span>Java</span>
+          <span class="chip"><span class="chip__dot"></span>JavaFX</span>
+          <span class="chip"><span class="chip__dot"></span>MySQL</span>
+          <span class="chip"><span class="chip__dot"></span>JasperReports</span>
+        </div>
+
+        <div class="case-hero__actions">
+          <a class="btn btn--primary" href="https://github.com/aleeche/ClinicVetSanus" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Repositorio</a>
+        </div>
+
+        <div class="case-meta">
+          <div class="case-meta__item">
+            <div class="case-meta__label">Año</div>
+            <div class="case-meta__value">2025</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Mi rol</div>
+            <div class="case-meta__value">Desarrollador (individual)</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Tipo</div>
+            <div class="case-meta__value">Aplicación de escritorio</div>
+          </div>
+        </div>
+      </section>
+
+      <img class="case-media case-media--fit" data-reveal data-zoomable src="../assets/img/projects/clinic-hero.jpeg"
+        alt="Módulo de gestión de mascotas de ClinicVetSanus: barra lateral de acciones, formulario de la mascota y tabla de registros." loading="lazy">
+
+      <div class="section case-body">
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Contexto</h2>
+          <p>
+            <strong>ClinicVetSanus</strong> es un sistema de gestión para una clínica veterinaria que
+            desarrollé como <strong>proyecto individual</strong> durante mi formación en el Centro
+            Educativo Técnico Laboral KINAL (2025). Una clínica maneja mucha información —dueños,
+            mascotas, historiales, citas, facturación— y la idea era centralizarla toda en una
+            aplicación de escritorio clara y con identidad propia.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">El problema</h2>
+          <p>
+            Sin una herramienta adecuada, la información clínica y comercial se dispersa y cuesta
+            consultarla. El reto era cubrir el flujo completo de la clínica —desde registrar un paciente
+            y su dueño hasta agendar citas, dejar constancia de consultas y tratamientos, controlar las
+            vacunas y emitir facturas y reportes— en una sola aplicación.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Mi rol</h2>
+          <p>
+            Fue un <strong>proyecto individual</strong>: lo diseñé y desarrollé por completo, de la base
+            de datos a la interfaz, a lo largo de varios meses.
+          </p>
+          <ul class="case-list">
+            <li>Arquitectura <strong>MVC</strong> en JavaFX: modelos, controladores y vistas en FXML con estilos CSS.</li>
+            <li>Capa de acceso a datos sobre MySQL, con una conexión <strong>Singleton</strong> mediante JDBC.</li>
+            <li>Generación de <strong>reportes en PDF</strong> con JasperReports.</li>
+            <li>Identidad visual del producto: logo, paleta y el lema «Tu mascota, nuestra misión».</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">La solución</h2>
+          <p>
+            ClinicVetSanus es una aplicación de escritorio construida con <strong>Java</strong> y
+            <strong>JavaFX</strong> (vistas en FXML + CSS) bajo una arquitectura <strong>MVC</strong>. Los
+            datos se guardan en <strong>MySQL</strong> a través de una conexión <strong>Singleton</strong>,
+            y los documentos se emiten como <strong>PDF con JasperReports</strong>.
+          </p>
+          <ul class="case-list">
+            <li>Inicio de sesión de usuarios y un menú central con acceso a los módulos y a los reportes.</li>
+            <li>Gestión (CRUD) de un dominio amplio: clientes, mascotas, veterinarios, empleados, proveedores, citas, consultas, tratamientos, recetas, vacunas y carné de vacunación, medicamentos, compras y facturas.</li>
+            <li>Reportes en PDF listos para imprimir: carné de vacunación, listado de clientes y facturas.</li>
+            <li>Cada módulo comparte un mismo patrón de pantalla —formulario, tabla y acciones— para una experiencia coherente.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal style="max-width:none">
+          <h2 class="case-section__title">Galería</h2>
+          <div class="case-gallery">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/clinic-login.jpeg"
+              alt="Pantalla de inicio de sesión de ClinicVetSanus, con el logo de la clínica, el lema «Tu mascota, nuestra misión» y los campos de usuario y contraseña." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/clinic-inicio.jpeg"
+              alt="Menú principal de ClinicVetSanus con los desplegables de Módulos y Reportes y la identidad de la clínica." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/clinic-reporte.jpeg"
+              alt="Reporte de mascotas generado en PDF con JasperReports, con los datos del cliente y de su mascota." loading="lazy">
+          </div>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Resultados y aprendizajes</h2>
+          <p>
+            El resultado es una aplicación de escritorio completa y usable, con identidad propia.
+            Reforcé <strong>Java</strong> y <strong>JavaFX</strong>, el patrón <strong>MVC</strong> y el
+            diseño de una base de datos relacional pensada para el día a día de la clínica; además di mis
+            primeros pasos con la generación de reportes en PDF.
+          </p>
+          <p>
+            Si lo ampliara, añadiría un pool de conexiones, reforzaría la validación y el manejo de
+            errores, y separaría más la lógica de negocio de los controladores de vista.
+          </p>
+        </section>
+      </div>
+
+      <nav class="case-nav" aria-label="Navegación entre proyectos">
+        <a class="case-nav__link" href="gestor-tienda-videojuegos.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span><span class="dir">Anterior</span>Gestor de Tienda de Videojuegos</span>
+        </a>
+        <a class="case-nav__link case-nav__link--end" href="juego-del-ahorcado.html">
+          <span><span class="dir">Siguiente</span>Juego del Ahorcado</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="../index.html#inicio">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Alejandro Echeverría</span>
+          </a>
+          <p class="footer__brand-desc">Desarrollador Full Stack. Construyendo software con foco en la experiencia y la calidad.</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Navegación</p>
+          <ul class="footer__links">
+            <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+            <li><a href="../index.html#habilidades">Habilidades</a></li>
+            <li><a href="../index.html#proyectos">Proyectos</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Enlaces</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:alejandroecheverria826@gmail.com">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
+        <span>Hecho con HTML, CSS y JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

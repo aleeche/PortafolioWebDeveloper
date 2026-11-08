@@ -1,0 +1,522 @@
+/* ============================================================
+   COMPONENTS — Bloques reutilizables (BEM-lite)
+   ============================================================ */
+
+/* ---------- Marca ---------- */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--ink-strong);
+  letter-spacing: -0.02em;
+  white-space: nowrap; /* la marca nunca se parte en 2 líneas (engordaría el header) */
+}
+
+/* Monograma AE. Va suelto, sin placa de color: el logotipo ya tiene una
+   silueta propia y meterlo en un cuadrado lo empequeñecía. Se pinta como
+   máscara para que herede el acento del tema activo. */
+.brand__mark {
+  flex: none;
+  width: 30px;
+  aspect-ratio: var(--logo-ae-ratio);
+  background: var(--accent);
+  -webkit-mask: var(--logo-ae) center / contain no-repeat;
+  mask: var(--logo-ae) center / contain no-repeat;
+  transition: background-color var(--dur) var(--ease);
+}
+
+.brand:hover .brand__mark {
+  background: var(--accent-strong);
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  padding: 13px 26px;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
+}
+
+.btn i {
+  font-size: 0.95em;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--e1);
+}
+
+.btn--primary:hover {
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--e2);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: var(--pressed);
+}
+
+.btn--secondary {
+  background: var(--surface);
+  color: var(--ink-strong);
+  border-color: var(--hairline);
+  box-shadow: var(--e1), var(--hi);
+}
+
+.btn--secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--e2), var(--hi);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--accent);
+  padding-inline: 14px;
+}
+
+.btn--ghost:hover {
+  background: var(--accent-soft);
+}
+
+.btn--sm {
+  padding: 10px 20px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- Toggle de tema ---------- */
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  box-shadow: var(--e1), var(--hi);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  color: var(--accent);
+}
+
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: inline-block;
+}
+
+/* ---------- Enlaces sociales ---------- */
+.social {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+.social__link {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  box-shadow: var(--e1), var(--hi);
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.social__link:hover {
+  transform: translateY(-3px);
+  color: var(--accent);
+}
+
+/* ---------- Chips ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  padding: 8px 15px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+  box-shadow: var(--hi);
+}
+
+.chip__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  padding: 6px 13px;
+}
+
+/* ---------- Tarjeta genérica ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  box-shadow: var(--e2), var(--hi);
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+  border-left: 2px solid var(--hairline);
+  margin-left: var(--sp-2);
+  padding-left: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-7);
+}
+
+.timeline__item {
+  position: relative;
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--sp-6) - 7px);
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--canvas);
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+
+.timeline__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-3);
+}
+
+.timeline__date {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.timeline__title {
+  font-size: var(--fs-h4);
+}
+
+.timeline__org {
+  color: var(--accent);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  margin-top: 2px;
+}
+
+.timeline__desc {
+  color: var(--ink-muted);
+  margin-top: var(--sp-3);
+}
+
+/* ---------- Campos de formulario ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.field__label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-strong);
+}
+
+.field__control {
+  width: 100%;
+  background: var(--sunken);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: 13px 16px;
+  color: var(--ink-strong);
+  box-shadow: var(--pressed);
+  transition: box-shadow var(--dur) var(--ease);
+}
+
+.field__control::placeholder {
+  color: var(--ink-muted);
+}
+
+.field__control:focus {
+  outline: none;
+  box-shadow: var(--pressed), 0 0 0 3px var(--accent-soft);
+}
+
+textarea.field__control {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.field__error {
+  font-size: var(--fs-caption);
+  color: var(--err);
+  min-height: 1em;
+}
+
+.field.is-invalid .field__control {
+  box-shadow: var(--pressed), 0 0 0 2px var(--err);
+}
+
+.form__status {
+  font-size: var(--fs-sm);
+  color: var(--ok);
+  font-weight: 500;
+}
+
+/* ---------- Animación de entrada (scroll reveal) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Ampliar imagen (botón sobre la imagen) ---------- */
+.zoom-wrap {
+  position: relative;
+  display: block;
+}
+
+.zoom-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--ink-strong);
+  box-shadow: var(--e2);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.zoom-wrap:hover .zoom-btn,
+.zoom-wrap:focus-within .zoom-btn {
+  opacity: 1;
+  transform: none;
+}
+
+.zoom-btn:hover {
+  color: var(--accent);
+}
+
+.zoom-btn i {
+  font-size: 15px;
+}
+
+/* En pantallas táctiles (sin hover) el botón queda siempre visible */
+@media (hover: none) {
+  .zoom-btn {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Visor de imágenes (lightbox) ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 5vw, 64px);
+  background: color-mix(in srgb, var(--canvas) 55%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.1);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease), visibility var(--dur) var(--ease);
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+  max-width: 100%;
+  transform: scale(0.97);
+  transition: transform var(--dur) var(--ease);
+}
+
+.lightbox.is-open .lightbox__figure {
+  transform: none;
+}
+
+.lightbox__img {
+  max-width: min(92vw, 1400px);
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--r-lg);
+  box-shadow: var(--e3);
+  background: var(--surface);
+}
+
+.lightbox__caption {
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border: 1px solid var(--hairline);
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.lightbox__btn {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--ink-strong);
+  box-shadow: var(--e2);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.lightbox__btn:hover {
+  color: var(--accent);
+}
+
+.lightbox__btn i {
+  font-size: 18px;
+}
+
+.lightbox__close {
+  top: clamp(12px, 3vw, 24px);
+  right: clamp(12px, 3vw, 24px);
+}
+
+.lightbox__close:hover {
+  transform: scale(1.06);
+}
+
+.lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox__nav--prev {
+  left: clamp(8px, 2.5vw, 28px);
+}
+
+.lightbox__nav--next {
+  right: clamp(8px, 2.5vw, 28px);
+}
+
+.lightbox__nav:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox__figure,
+  .zoom-btn {
+    transition: none;
+  }
+  .lightbox__figure {
+    transform: none;
+  }
+}

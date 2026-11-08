@@ -1,0 +1,420 @@
+/* ============================================================
+   LAYOUT — Contenedor, secciones, header, footer
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* Secciones con ritmo vertical generoso */
+.section {
+  --section-pad-y: clamp(56px, 9vw, 112px);
+  padding-block: var(--section-pad-y);
+  /* Salto por nav: el encabezado debe caer SIEMPRE ~24px bajo el header, sin
+     importar el padding de la sección (en escritorio llega a 112px y en móvil
+     baja a 56px). Restamos ese padding para que el hueco superior sea CONSTANTE
+     en móvil, tablet y escritorio y no quede un blanco enorme arriba.
+     --header-h lo fija nav.js con la altura real del header (varía por
+     breakpoint); 76px es el respaldo para el salto de ancla nativo sin JS.
+     scroll-nav.js lee este mismo valor para que el salto animado coincida. */
+  scroll-margin-top: calc(var(--header-h) + 24px - var(--section-pad-y));
+}
+
+.section--tight {
+  --section-pad-y: clamp(40px, 6vw, 72px);
+  padding-block: var(--section-pad-y);
+}
+
+/* Cabecera de sección (eyebrow + título + intro) */
+.section__head {
+  max-width: 54ch;
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.eyebrow {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-3);
+}
+
+.section__title {
+  font-size: var(--fs-h2);
+}
+
+.section__intro {
+  color: var(--ink-muted);
+  font-size: var(--fs-body-lg);
+  margin-top: var(--sp-4);
+}
+
+/* ---------- Header / Navegación ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+/* El fondo esmerilado vive en un pseudo-elemento en vez de en .header
+   directamente: backdrop-filter en el propio .header lo convertiría en el
+   "containing block" de sus descendientes position:fixed (el <nav> móvil),
+   rompiendo su tamaño/posición de pantalla completa. */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.header.is-scrolled {
+  border-bottom-color: var(--hairline);
+  box-shadow: var(--e1);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-block: var(--sp-4);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.nav__list {
+  display: flex;
+  gap: var(--sp-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__link {
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  position: relative;
+  padding-block: 4px;
+  white-space: nowrap;
+}
+
+.nav__link:hover {
+  color: var(--accent);
+}
+
+.nav__link.is-active {
+  color: var(--accent);
+}
+
+.nav__link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+/* Botón hamburguesa (oculto en desktop) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--e1), var(--hi);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin-inline: auto;
+  background: var(--ink-strong);
+  border-radius: 2px;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  border-top: 1px solid var(--hairline);
+  background: var(--surface);
+  padding-block: clamp(40px, 6vw, 64px) var(--sp-7);
+}
+
+.footer__grid {
+  display: grid;
+  gap: var(--sp-7);
+  grid-template-columns: 1fr;
+}
+
+.footer__brand-desc {
+  color: var(--ink-muted);
+  font-size: var(--fs-sm);
+  margin-top: var(--sp-3);
+  max-width: 32ch;
+}
+
+.footer__col-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-strong);
+  margin-bottom: var(--sp-4);
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__links a {
+  color: var(--ink-muted);
+  font-size: var(--fs-sm);
+}
+
+.footer__links a:hover {
+  color: var(--accent);
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  margin-top: var(--sp-7);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--hairline);
+  color: var(--ink-muted);
+  font-size: var(--fs-sm);
+}
+
+/* ---------- Responsive: menú móvil ---------- */
+@media (max-width: 1080px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Por encima del panel .nav (z-index 200 local a .header) para que el
+     botón de tema y el hamburguesa/X sigan visibles y clicables con el
+     menú abierto. */
+  .header__actions {
+    position: relative;
+    z-index: calc(var(--z-menu) + 1);
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(320px, 82vw);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--sp-6);
+    padding: calc(var(--sp-9) + 12px) var(--sp-6) var(--sp-6);
+    background: var(--surface);
+    border-left: 1px solid var(--hairline);
+    box-shadow: var(--e3);
+    transform: translateX(100%);
+    transition: transform var(--dur-slow) var(--ease);
+    z-index: var(--z-menu);
+  }
+
+  .nav.is-open {
+    transform: translateX(0);
+  }
+
+  .nav__list {
+    flex-direction: column;
+    gap: var(--sp-5);
+    width: 100%;
+  }
+
+  .nav__link {
+    font-size: var(--fs-h4);
+  }
+
+  /* Fondo oscuro al abrir el menú.
+     z-index por debajo de --z-header (no de --z-menu): .nav vive dentro de
+     .header, que crea su propio grupo de apilamiento por tener z-index
+     propio. Comparado desde la raíz del documento, ese grupo entero pesa
+     --z-header; si el backdrop pesara más (--z-menu - 1) se pintaría encima
+     del menú y le robaría los clics a sus enlaces. */
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--dur) var(--ease), visibility var(--dur) var(--ease);
+    z-index: calc(var(--z-header) - 1);
+  }
+
+  .nav-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 640px) {
+  .footer__grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+/* ---------- Header en pantallas muy estrechas ----------
+   La fila del header es indivisible: marca (212px con el nombre completo) +
+   las dos placas táctiles de 44px, que no se tocan porque 44px es el mínimo
+   accesible. Sumando gap y padding pedía 348px, así que por debajo de eso
+   empujaba el documento y aparecía scroll horizontal (con la franja en blanco
+   a la derecha del header, que solo cubre el ancho de la ventana).
+   Se resuelve encogiendo la marca en dos escalones en vez de tocar los
+   botones. */
+@media (max-width: 380px) {
+  .header .brand {
+    font-size: 1rem;
+    gap: var(--sp-2);
+  }
+
+  .header .brand__mark {
+    width: 26px;
+  }
+}
+
+/* Último escalón: solo el monograma. El nombre accesible lo sigue aportando
+   el aria-label del enlace, así que no se pierde para lectores de pantalla. */
+@media (max-width: 349px) {
+  .header .brand__name {
+    display: none;
+  }
+}
+
+/* ============================================================
+   EFECTOS GLOBALES (creados por JS; degradan sin él)
+   ============================================================ */
+
+/* Barra de progreso de lectura (borde superior) */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 300;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Glow ambiental que sigue al puntero (detrás del contenido) */
+.pointer-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle closest-side, var(--glow), transparent);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+  will-change: transform;
+}
+
+.pointer-glow.is-active {
+  opacity: 1;
+}
+
+/* ============================================================
+   VELO DE TRANSICIÓN ENTRE PÁGINAS
+   Cubre el parpadeo al navegar entre documentos (landing ↔ fichas).
+   La clase .js-nav (script del <head>) garantiza que sin JS nunca aparezca.
+   Entrada: la anima el CSS (auto-curable). Salida: la dispara transition.js.
+   ============================================================ */
+.page-veil {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-veil);
+  background: var(--canvas);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Con JS activo: al cargar, el velo entra tapando y se desvanece revelando. */
+.js-nav .page-veil {
+  visibility: visible;
+  animation: pageVeilReveal var(--dur) var(--ease) forwards;
+}
+
+/* Al salir hacia otra página, el velo vuelve a tapar antes de navegar. */
+.page-veil.is-leaving {
+  visibility: visible;
+  pointer-events: all;
+  animation: pageVeilCover var(--dur) var(--ease) forwards;
+}
+
+@keyframes pageVeilReveal {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes pageVeilCover {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Sin movimiento: nada de fundidos; el contenido aparece de inmediato. */
+@media (prefers-reduced-motion: reduce) {
+  .js-nav .page-veil,
+  .page-veil.is-leaving {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+}

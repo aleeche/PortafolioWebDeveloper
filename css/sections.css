@@ -1,0 +1,728 @@
+/* ============================================================
+   SECTIONS — Estilos específicos de cada bloque
+   ============================================================ */
+
+/* ---------- HERO ---------- */
+.hero {
+  /* Top más corto que el resto de secciones: el header ya aporta separación
+     propia: si el hero suma otro padding grande arriba se siente vacío.
+     Se pisa --section-pad-y (no solo padding-top) porque el scroll-margin-top
+     de `.section` se calcula a partir de esa variable: si no coincide con el
+     padding real, el salto al ancla #inicio queda corto y el header sticky
+     tapa el "Desarrollador Full Stack". */
+  --section-pad-y: clamp(20px, 3vw, 48px);
+  padding-top: var(--section-pad-y);
+  padding-bottom: clamp(48px, 8vw, 104px);
+}
+
+.hero__grid {
+  display: grid;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+.hero__title {
+  font-size: var(--fs-display);
+  margin-top: var(--sp-5);
+}
+
+.hero__subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: var(--ink-muted);
+  margin-top: var(--sp-5);
+  max-width: 40ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  margin-top: var(--sp-7);
+}
+
+.hero__social {
+  margin-top: var(--sp-6);
+}
+
+/* Visual gráfico del Hero (abstracción soft-UI "ventana de app").
+   Reemplazable por una foto: ver comentario en index.html */
+.hero-visual {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 440px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Monograma AE de fondo.
+   La opacidad no es plana: una máscara en diagonal densifica la marca en la
+   esquina inferior derecha (donde se ve) y la disuelve hacia arriba a la
+   izquierda, justo por donde pasa la ventana flotante. Da profundidad sin
+   competir con el contenido. */
+.hero-visual__mark {
+  --ae-fill: 0.14;
+
+  /* Ocupa la mitad inferior de la caja, que es la zona libre: la ventana
+     flotante solo le pisa la esquina superior izquierda. Sin `transform`:
+     ese canal lo usa el parallax de scroll-fx.js. */
+  position: absolute;
+  right: -1%;
+  bottom: 2%;
+  width: 94%;
+  height: auto;
+  color: var(--accent);
+  pointer-events: none;
+  /* Degradado suave, no un barrido: densifica hacia abajo a la derecha sin
+     llegar a borrar la A. El monograma tiene que seguir leyéndose entero. */
+  -webkit-mask-image: linear-gradient(300deg,
+      rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, .8) 50%, rgba(0, 0, 0, .5) 92%);
+  mask-image: linear-gradient(300deg,
+      rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, .8) 50%, rgba(0, 0, 0, .5) 92%);
+}
+
+[data-theme="dark"] .hero-visual__mark {
+  --ae-fill: 0.19;
+}
+
+.hero-visual__mark-path {
+  fill: currentColor;
+  fill-opacity: var(--ae-fill);
+  stroke: currentColor;
+  stroke-width: 0.45;
+  stroke-opacity: 0;
+  stroke-dasharray: 1; /* pathLength="1" → el patrón cubre el contorno entero */
+}
+
+/* Con JS (clase .js-nav del <head>) la marca se traza al cargar. Sin JS
+   aparece ya asentada: el estado final es el de la regla de arriba. */
+.js-nav .hero-visual__mark-path {
+  animation: ae-trazo 2500ms cubic-bezier(.45, .05, .2, 1) 320ms backwards;
+}
+
+@keyframes ae-trazo {
+  0% {
+    stroke-dashoffset: 1;
+    stroke-opacity: .5;
+    fill-opacity: 0;
+  }
+  64% {
+    stroke-dashoffset: 0;
+    stroke-opacity: .5;
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
+    fill-opacity: var(--ae-fill);
+  }
+}
+
+.hero-visual__window {
+  position: absolute;
+  left: 6%;
+  top: 14%;
+  width: 74%;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  box-shadow: var(--e3), var(--hi);
+  padding: 16px;
+  animation: floatA 7s ease-in-out infinite;
+}
+
+.hero-visual__bar {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.hero-visual__bar span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--sunken);
+}
+
+.hero-visual__bar span:first-child {
+  background: var(--accent);
+}
+
+.hero-visual__line {
+  height: 10px;
+  border-radius: 4px;
+  background: var(--sunken);
+  margin-bottom: 11px;
+}
+
+.hero-visual__line--accent {
+  background: var(--accent-soft);
+}
+
+.hero-visual__chip {
+  position: absolute;
+  right: 2%;
+  top: 6%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  box-shadow: var(--e2), var(--hi);
+  padding: 12px 16px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-strong);
+  animation: floatB 6s ease-in-out infinite;
+}
+
+.hero-visual__chip .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.hero-visual__badge {
+  position: absolute;
+  left: 0;
+  bottom: 8%;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e3);
+  padding: 16px 20px;
+  animation: floatB 8s ease-in-out infinite;
+}
+
+.hero-visual__badge .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.hero-visual__badge .label {
+  font-size: var(--fs-caption);
+  opacity: 0.85;
+  margin-top: 3px;
+}
+
+@keyframes floatA {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual__window,
+  .hero-visual__chip,
+  .hero-visual__badge {
+    animation: none;
+  }
+
+  /* Doble clase: tiene que ganar a `.js-nav .hero-visual__mark-path`. */
+  .js-nav .hero-visual__mark-path {
+    animation: none;
+  }
+}
+
+/* ---------- SOBRE MÍ ---------- */
+.about__grid {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+  /* Mobile-first: retrato, relato y ficha apilados en una sola columna. */
+  grid-template-areas:
+    "photo"
+    "body"
+    "ficha";
+}
+
+/* Retrato en "Sobre mí". El marco (borde + sombra) integra la foto de fondo
+   blanco en el canvas cálido; sin él se vería como un rectángulo recortado. */
+.about__photo {
+  grid-area: photo;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 280px;
+}
+
+.about__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--e3), var(--hi);
+  background: var(--surface);
+}
+
+.about__body { grid-area: body; }
+.about__grid .ficha { grid-area: ficha; }
+
+.about__body p + p {
+  margin-top: var(--sp-4);
+}
+
+.about__body p {
+  color: var(--ink);
+}
+
+/* Ficha de datos */
+.ficha {
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.ficha__row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding-block: var(--sp-4);
+  border-bottom: 1px dashed var(--hairline);
+}
+
+.ficha__row:last-child {
+  border-bottom: 0;
+}
+
+.ficha__row i {
+  color: var(--accent);
+  width: 20px;
+  text-align: center;
+}
+
+.ficha__label {
+  font-size: var(--fs-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.ficha__value {
+  font-weight: 600;
+  color: var(--ink-strong);
+  font-size: var(--fs-sm);
+}
+
+/* ---------- HABILIDADES ---------- */
+.skills__grid {
+  display: grid;
+  /* row-gap más ajustado que column-gap: acerca las dos filas sin apretar en horizontal */
+  gap: var(--sp-4) var(--sp-5);
+  grid-template-columns: 1fr;
+}
+
+.skill-card {
+  padding: clamp(18px, 2.5vw, 22px);
+}
+
+.skill-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+
+.skill-card__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 17px;
+}
+
+.skill-card__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+}
+
+/* ---------- PROYECTOS ---------- */
+.featured {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  padding: 0;
+}
+
+.featured__thumb {
+  min-height: 200px;
+  background: linear-gradient(140deg, var(--accent), var(--accent-strong));
+  display: grid;
+  place-items: center;
+  padding: var(--sp-6);
+}
+
+.featured__mock {
+  width: 78%;
+  max-width: 300px;
+  background: rgba(255, 255, 255, .14);
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.featured__mock span {
+  display: block;
+  height: 9px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .34);
+  margin-bottom: 9px;
+}
+
+.featured__mock span.short {
+  width: 55%;
+}
+
+/* Variante con captura real: la imagen va a sangre y llena la columna.
+   `align-self` y `place-items` neutralizan el centrado que la tarjeta
+   aplica en el layout de dos columnas, para que no queden franjas. */
+.featured__thumb--img {
+  padding: 0;
+  background: var(--sunken);
+  align-self: stretch;
+  place-items: stretch;
+}
+
+.featured__thumb--img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* Variante con el logotipo del cliente en vez de una captura (de ese sistema
+   no hay capturas publicables). El logo es un PNG con fondo transparente, así
+   que la placa acompaña al tema con `--sunken`, igual que el retrato de
+   Sobre mí: clara en claro, oscura en oscuro. Se muestra completo (contain):
+   un logotipo ajeno no se recorta. */
+.featured__thumb--logo {
+  background: var(--sunken);
+  padding: clamp(20px, 3vw, 34px);
+  align-self: stretch;
+}
+
+.featured__thumb--logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 360px);
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* La tarjeta ancha que cierra la sección respira igual que el grid. */
+.projects__grid + .featured {
+  margin-top: var(--sp-5);
+}
+
+.featured__body {
+  padding: clamp(22px, 3vw, 28px);
+}
+
+.featured__title {
+  font-size: var(--fs-h3);
+  margin-top: var(--sp-3);
+}
+
+.featured__desc {
+  color: var(--ink-muted);
+  margin-top: var(--sp-3);
+}
+
+.featured__cta {
+  margin-top: var(--sp-5);
+}
+
+.projects__grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: 1fr;
+  margin-top: var(--sp-5);
+}
+
+.project-card {
+  overflow: hidden;
+  box-shadow: var(--e1), var(--hi);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--e3), var(--hi);
+}
+
+.project-card__thumb {
+  --thumb-h: 140px;
+  height: var(--thumb-h);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--accent-strong);
+  background: linear-gradient(140deg, #d9d9ea, #c7c7e0);
+  overflow: hidden;
+}
+
+.project-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.project-card:hover .project-card__thumb img {
+  transform: scale(1.04);
+}
+
+[data-theme="dark"] .project-card__thumb {
+  background: linear-gradient(140deg, #2c2b40, #232235);
+  color: var(--accent);
+}
+
+.project-card:nth-child(2n) .project-card__thumb {
+  background: linear-gradient(140deg, #dfe6e0, #c9dcd0);
+}
+
+[data-theme="dark"] .project-card:nth-child(2n) .project-card__thumb {
+  background: linear-gradient(140deg, #25302a, #202a24);
+}
+
+/* Miniatura con el logotipo del cliente en vez de una captura: se muestra
+   completo (contain) sobre el lienzo claro de marca. Los cuatro selectores
+   son necesarios para ganar a las reglas de degradado por posición y tema. */
+.project-card__thumb--logo,
+.project-card:nth-child(2n) .project-card__thumb--logo,
+[data-theme="dark"] .project-card__thumb--logo,
+[data-theme="dark"] .project-card:nth-child(2n) .project-card__thumb--logo {
+  background: var(--logo-plate);
+}
+
+.project-card__thumb--logo {
+  padding: var(--sp-4);
+}
+
+/* El alto se acota con `calc`, no con porcentajes: dentro de este grid un
+   `height/max-height: 100%` se resuelve como `auto`, la imagen toma su tamaño
+   intrínseco (500px) y se sale del recorte del thumb. */
+.project-card__thumb--logo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(var(--thumb-h) - var(--sp-4) * 2);
+  object-fit: contain;
+}
+
+.project-card__body {
+  padding: var(--sp-5) var(--sp-5) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-card__desc {
+  color: var(--ink-muted);
+  font-size: var(--fs-sm);
+  margin-top: var(--sp-2);
+  margin-bottom: var(--sp-4); /* separación mínima con el pie (chips) */
+  line-height: 1.55;
+}
+
+.project-card__tags {
+  margin-top: var(--sp-3);
+}
+
+/* Rejilla de proyectos: ancla el pie (chips + "Ver caso") al fondo de la
+   tarjeta para que queden alineados entre tarjetas, sin depender del largo
+   del texto. No afecta a la tarjeta destacada (no está dentro de .project-card). */
+.project-card .project-card__tags {
+  margin-top: auto;
+}
+
+.project-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  margin-top: var(--sp-5);
+}
+
+.project-card__link i {
+  transition: transform var(--dur) var(--ease);
+}
+
+.project-card:hover .project-card__link i {
+  transform: translateX(4px);
+}
+
+/* ---------- CONTACTO ---------- */
+.contact__grid {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+
+/* Los items de un grid arrancan con min-width:auto, así que la pista NO puede
+   encogerse por debajo del min-content de su contenido más ancho. Con el correo
+   en la columna izquierda eso empujaba la pista a 349px dentro de un contenedor
+   de 320px, y el formulario —que se estira a la pista— desbordaba la pantalla
+   provocando scroll horizontal. min-width:0 devuelve el control al contenedor. */
+.contact__grid > * {
+  min-width: 0;
+}
+
+.contact__lead {
+  color: var(--ink-muted);
+  font-size: var(--fs-body-lg);
+  margin-top: var(--sp-4);
+}
+
+.contact__methods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+
+/* El correo es una cadena sin puntos de corte naturales (~297px): sin esto su
+   min-content manda sobre el ancho de la columna. `anywhere` —y no
+   `break-word`— es la que además reduce el min-content del elemento, que es
+   justo lo que necesita el grid para poder encoger. El <wbr> del marcado hace
+   que el corte caiga antes de la @ en vez de en mitad del usuario. */
+.contact__method {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--ink);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+/* flex:none — la placa nunca se encoge para dejar sitio al texto.
+   align-self:start — al partirse el correo en dos líneas el icono se queda
+   arriba, junto a la primera, en vez de centrarse contra el bloque entero. */
+.contact__method i {
+  display: grid;
+  place-items: center;
+  flex: none;
+  align-self: start;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--e1), var(--hi);
+  color: var(--accent);
+}
+
+.contact__form {
+  padding: clamp(22px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ============================================================
+   BREAKPOINTS de sección (mobile-first)
+   ============================================================ */
+
+@media (min-width: 560px) {
+  .skills__grid { grid-template-columns: repeat(2, 1fr); }
+  .projects__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 760px) {
+  .hero__grid { grid-template-columns: 1.05fr 0.95fr; }
+  .about__grid {
+    grid-template-columns: minmax(240px, 280px) 1fr;
+    grid-template-areas:
+      "photo body"
+      "ficha ficha";
+  }
+  .about__photo { max-width: none; }
+  /* Párrafo centrado verticalmente junto al retrato: equilibra la fila
+     superior aunque el texto sea más corto que la foto. */
+  .about__body { align-self: center; }
+
+  /* La ficha pasa a barra horizontal a lo ancho: los datos se reparten en fila
+     y se reacomodan solos según el espacio (auto-fit). Así desaparece el hueco
+     que dejaba la columna del párrafo (más corta que la de la foto) y todo
+     queda a un mismo nivel. */
+  .ficha {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* tablet: 2×2 equilibrado */
+    gap: clamp(18px, 2.4vw, 32px);
+    padding: clamp(22px, 2.6vw, 30px) clamp(24px, 3vw, 38px);
+  }
+  .ficha__row {
+    border-bottom: 0;
+    padding-block: 0;
+    align-items: flex-start;
+  }
+
+  .contact__grid { grid-template-columns: 1fr 1fr; }
+  .featured { grid-template-columns: 1fr 1fr; align-items: center; }
+
+  /* Variante invertida: la imagen pasa a la columna derecha. Solo se reordena
+     la rejilla (el DOM deja la imagen primero para que en móvil quede arriba
+     igual que en el destacado). */
+  .featured--reverse .featured__thumb { order: 2; }
+
+  /* Las dos tarjetas anchas comparten un alto mínimo: mientras el texto quepa
+     dentro, ambas miden exactamente lo mismo y la sección lee como un sistema.
+     Es un mínimo, no un alto fijo: si el contenido crece, la tarjeta crece.
+     (No se usa `aspect-ratio` en la columna visual: en un ítem de rejilla
+     estirado infla su ancho mínimo y descuadra las dos columnas.) */
+  .featured { min-height: 26rem; }
+}
+
+@media (min-width: 940px) {
+  .skills__grid { grid-template-columns: repeat(3, 1fr); }
+  .projects__grid { grid-template-columns: repeat(3, 1fr); }
+  .ficha { grid-template-columns: repeat(4, 1fr); } /* escritorio: los 4 datos en una fila */
+}
+
+/* ============================================================
+   Aterrizaje direccional al navegar por el nav (lo dispara scroll-nav.js).
+   El encabezado entra desde abajo si el usuario bajó, o desde arriba si subió.
+   ============================================================ */
+/* Se aplica siempre (decisión de producto: efectos visibles para todos).
+   El !important es intencional y justificado: gana al reset global de
+   base.css que anula toda animación bajo prefers-reduced-motion. */
+.section__head.is-arriving-down,
+.hero__intro.is-arriving-down {
+  animation: headArriveDown 460ms var(--ease) both !important;
+}
+
+.section__head.is-arriving-up,
+.hero__intro.is-arriving-up {
+  animation: headArriveUp 460ms var(--ease) both !important;
+}
+
+@keyframes headArriveDown {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes headArriveUp {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

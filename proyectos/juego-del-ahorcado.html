@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Juego del Ahorcado — Alejandro Echeverría</title>
+  <meta name="description" content="Caso de estudio: versión web del clásico juego del ahorcado, con lógica de estado e interfaz interactiva en JavaScript.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Juego del Ahorcado — Alejandro Echeverría">
+  <meta property="og:description" content="Caso de estudio: juego del ahorcado en HTML, CSS y JavaScript vanilla.">
+  <meta property="og:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/og-image.png">
+
+  <link rel="icon" href="../assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add("js-nav");
+    (function () {
+      try {
+        if (localStorage.getItem("ae-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/sections.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
+       Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
+  <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Inicio — Alejandro Echeverría">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Alejandro Echeverría</span>
+      </a>
+      <nav class="nav" data-nav aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav__link" href="../index.html#habilidades">Habilidades</a></li>
+          <li><a class="nav__link" href="../index.html#trayectoria">Trayectoria</a></li>
+          <li><a class="nav__link" href="../index.html#proyectos">Proyectos</a></li>
+          <li><a class="nav__link" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
+
+  <main id="contenido">
+    <div class="container">
+
+      <section class="case-hero" data-reveal>
+        <a class="case-back" href="../index.html#proyectos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver a proyectos</a>
+        <h1 class="case-hero__title">Juego del Ahorcado</h1>
+        <p class="case-hero__tagline">Versión web del clásico juego de palabras: motor propio en JavaScript, dibujo en Canvas y varios niveles con sonido y animaciones.</p>
+
+        <div class="chip-group case-tags">
+          <span class="chip"><span class="chip__dot"></span>HTML5</span>
+          <span class="chip"><span class="chip__dot"></span>CSS3</span>
+          <span class="chip"><span class="chip__dot"></span>JavaScript</span>
+          <span class="chip"><span class="chip__dot"></span>Canvas API</span>
+        </div>
+
+        <div class="case-hero__actions">
+          <a class="btn btn--primary" href="https://github.com/aleeche/AhorcadoGame" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Repositorio</a>
+        </div>
+
+        <div class="case-meta">
+          <div class="case-meta__item">
+            <div class="case-meta__label">Año</div>
+            <div class="case-meta__value">2025</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Mi rol</div>
+            <div class="case-meta__value">Desarrollador Frontend</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Tipo</div>
+            <div class="case-meta__value">Juego web</div>
+          </div>
+        </div>
+      </section>
+
+      <img class="case-media" data-reveal data-zoomable src="../assets/img/projects/ahorcado-hero.jpg"
+        alt="Partida del Juego del Ahorcado en el nivel difícil: el muñeco a medio dibujar, la palabra oculta y el teclado virtual en pantalla." loading="lazy">
+
+      <div class="section case-body">
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Contexto</h2>
+          <p>
+            El ahorcado es un clásico de adivinar una palabra letra a letra antes de agotar los
+            intentos. Lo elegí para llevar a la web un juego <em>completo</em> —con estado, interacción
+            y feedback— usando solo los fundamentos: HTML, CSS y JavaScript, sin librerías ni frameworks.
+            El resultado es una pequeña experiencia arcade con varios niveles temáticos, música y
+            animaciones.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">El problema</h2>
+          <p>
+            El reto era doble. Primero, modelar con precisión el estado del juego —palabra secreta,
+            letras acertadas, letras ya usadas e intentos restantes— y mantenerlo sincronizado con la
+            interfaz en cada jugada. Segundo, dibujar el muñeco de forma incremental sobre un
+            <code>&lt;canvas&gt;</code>, añadiendo una parte del cuerpo por cada fallo. A eso se sumó un
+            reto de diseño: que un mismo motor sirviera para todos los niveles sin duplicar la lógica.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Mi rol</h2>
+          <p>Diseño y desarrollo frontend completos, de principio a fin.</p>
+          <ul class="case-list">
+            <li>Máquina de estado del juego en JavaScript puro (palabra, aciertos, letras usadas e intentos).</li>
+            <li>Renderizado incremental del ahorcado con la API de Canvas 2D.</li>
+            <li>Teclado virtual generado dinámicamente en el DOM.</li>
+            <li>Interfaz, temas visuales y estilos con HTML5 y CSS3.</li>
+            <li>Integración de música de fondo y efectos de sonido.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">La solución</h2>
+          <p>
+            Construí un único motor de juego en <strong>JavaScript vanilla</strong> que gestiona todo el
+            estado en memoria y actualiza el DOM ante cada letra. La decisión de diseño clave fue
+            <strong>separar los datos de la lógica</strong>: cada nivel es una página que solo aporta su
+            lista de palabras, mientras el mismo script controla el comportamiento. Así, ampliar el juego
+            es tan simple como añadir palabras.
+          </p>
+          <ul class="case-list">
+            <li>Tres niveles de dificultad con ambientación propia —campo, clima y espacio—, cada uno con su banco de palabras y su música.</li>
+            <li>Dibujo del muñeco con la API de Canvas, parte a parte, según los fallos acumulados.</li>
+            <li>Teclado virtual en pantalla, más la opción de arriesgarse a escribir la palabra completa: aciertas y ganas, fallas y pierdes.</li>
+            <li>Detección de victoria y derrota, con mensajes, bloqueo del teclado y reinicio de partida.</li>
+            <li>Efectos de sonido para acierto, fallo y final, y una lluvia de confeti animada al ganar.</li>
+            <li>Un nivel secreto oculto tras un pequeño <em>easter egg</em>, que invierte la mecánica: el muñeco empieza completo y se va borrando.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal style="max-width:none">
+          <h2 class="case-section__title">Galería</h2>
+          <div class="case-gallery">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/ahorcado-menu.jpg"
+              alt="Menú principal del Juego del Ahorcado con la selección de nivel de dificultad." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/ahorcado-partida.jpg"
+              alt="Partida en curso en el nivel fácil, con el muñeco a medio dibujar y las letras ya usadas." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/ahorcado-victoria.jpg"
+              alt="Pantalla de victoria con la palabra revelada y la lluvia de confeti." loading="lazy">
+          </div>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Resultados y aprendizajes</h2>
+          <p>
+            El juego quedó totalmente funcional y jugable en el navegador. Fue un ejercicio muy completo
+            para afianzar tres pilares del frontend: el manejo del estado, la manipulación del DOM y el
+            dibujo por código con Canvas. Reutilizar un mismo motor para todas sus variantes me enseñó,
+            en la práctica, el valor de separar datos y lógica desde el primer momento.
+          </p>
+          <p>
+            Si lo retomara hoy, unificaría los niveles en una sola página parametrizada y organizaría el
+            JavaScript en módulos ES —justo el enfoque que sigo en este portafolio—, además de añadir
+            soporte de teclado físico y persistir la mejor puntuación.
+          </p>
+        </section>
+      </div>
+
+      <nav class="case-nav" aria-label="Navegación entre proyectos">
+        <a class="case-nav__link" href="sistema-gestion-veterinaria.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span><span class="dir">Anterior</span>Sistema de Gestión Veterinaria</span>
+        </a>
+        <a class="case-nav__link case-nav__link--end" href="sistema-bancario-multiservicio.html">
+          <span><span class="dir">Siguiente</span>Sistema Bancario de Microservicios</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="../index.html#inicio">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Alejandro Echeverría</span>
+          </a>
+          <p class="footer__brand-desc">Desarrollador Full Stack. Construyendo software con foco en la experiencia y la calidad.</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Navegación</p>
+          <ul class="footer__links">
+            <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+            <li><a href="../index.html#habilidades">Habilidades</a></li>
+            <li><a href="../index.html#proyectos">Proyectos</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Enlaces</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:alejandroecheverria826@gmail.com">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
+        <span>Hecho con HTML, CSS y JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# ── Código fuente de los proyectos (referencia local; NO forma parte del sitio) ──
+# Se leyeron para redactar las fichas. Las capturas ya viven en assets/img/projects.
+# Una de ellas (AllEliteGames) tiene su propio repositorio .git.
+/AHORCADO/
+/Tienda de Videojuegos/
+/Sistema de Gestión Veterinaria/
+/SistemaBancario/
+# ⚠️ Contiene datos reales de clientes de la veterinaria (nombres, teléfonos,
+#    direcciones) en basededatos.md y controlgrooming.md. NO subir nunca.
+/CriaturitasVetSystem/
+
+# ── Archivos de sistema / editores ──
+.DS_Store
+Thumbs.db
+*.log

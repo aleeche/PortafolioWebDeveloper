@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NexusBank — Sistema Bancario de Microservicios — Alejandro Echeverría</title>
+  <meta name="description" content="Caso de estudio: NexusBank, plataforma bancaria sobre cuatro microservicios (.NET 8 y Node.js), panel web en React y app móvil en React Native. Desplegada en producción.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NexusBank — Sistema Bancario de Microservicios">
+  <meta property="og:description" content="Cuatro microservicios con JWT compartido, contabilidad por doble partida y transacciones ACID. Panel en React, app móvil en React Native, desplegado en Firebase y Vercel.">
+  <meta property="og:image" content="https://aleeche.github.io/PortafolioWebDeveloper/assets/img/og-image.png">
+
+  <link rel="icon" href="../assets/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add("js-nav");
+    (function () {
+      try {
+        if (localStorage.getItem("ae-theme") === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/sections.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
+       Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
+  <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="header" data-header>
+    <div class="container header__inner">
+      <a class="brand" href="../index.html#inicio" aria-label="Inicio — Alejandro Echeverría">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Alejandro Echeverría</span>
+      </a>
+
+      <nav class="nav" data-nav aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav__link" href="../index.html#habilidades">Habilidades</a></li>
+          <li><a class="nav__link" href="../index.html#trayectoria">Trayectoria</a></li>
+          <li><a class="nav__link" href="../index.html#proyectos">Proyectos</a></li>
+          <li><a class="nav__link" href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar entre tema claro y oscuro" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" data-nav-toggle type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
+
+  <main id="contenido">
+    <div class="container">
+
+      <!-- CABECERA DEL PROYECTO -->
+      <section class="case-hero" data-reveal>
+        <a class="case-back" href="../index.html#proyectos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver a proyectos</a>
+        <!-- En su propia línea: el enlace de volver siempre queda solo arriba. -->
+        <div class="case-hero__badge">
+          <span class="badge"><i class="fa-solid fa-star" aria-hidden="true"></i> Proyecto destacado</span>
+        </div>
+        <h1 class="case-hero__title">Sistema Bancario de Microservicios</h1>
+        <p class="case-hero__tagline">
+          <strong>NexusBank</strong>: plataforma bancaria repartida en cuatro microservicios independientes,
+          con panel web de administración, app móvil para clientes y contabilidad por doble partida.
+          Desplegada y funcionando en producción.
+        </p>
+
+        <div class="chip-group case-tags">
+          <span class="chip"><span class="chip__dot"></span>.NET 8</span>
+          <span class="chip"><span class="chip__dot"></span>Node.js</span>
+          <span class="chip"><span class="chip__dot"></span>React</span>
+          <span class="chip"><span class="chip__dot"></span>React Native</span>
+          <span class="chip"><span class="chip__dot"></span>MongoDB</span>
+          <span class="chip"><span class="chip__dot"></span>PostgreSQL</span>
+        </div>
+
+        <div class="case-hero__actions">
+          <a class="btn btn--primary" href="https://github.com/NexusCodeKin/Sistema-Bancario" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> Repositorio</a>
+        </div>
+
+        <div class="case-meta">
+          <div class="case-meta__item">
+            <div class="case-meta__label">Año</div>
+            <div class="case-meta__value">2026</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Mi rol</div>
+            <div class="case-meta__value">Scrum Master · Desarrollador Full Stack</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Equipo</div>
+            <div class="case-meta__value">Nexus Code · Centro Educativo Técnico Laboral KINAL</div>
+          </div>
+          <div class="case-meta__item">
+            <div class="case-meta__label">Estado</div>
+            <div class="case-meta__value">Desplegado en producción</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- IMAGEN PRINCIPAL -->
+      <img class="case-media case-media--fit" data-reveal data-zoomable src="../assets/img/projects/bancario-hero.jpg"
+        alt="Panel operativo de NexusBank: barra lateral con los módulos del banco y tarjetas de acceso a gestión de usuarios, cuentas, depósitos, divisas, auditoría y ranking." loading="lazy">
+
+      <!-- CUERPO -->
+      <div class="section case-body">
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Contexto</h2>
+          <p>
+            <strong>NexusBank</strong> es el sistema bancario que desarrollamos como equipo
+            —<strong>Nexus Code</strong>— durante mi formación en el Centro Educativo Técnico Laboral
+            KINAL, partiendo de un
+            código base del docente Braulio Echeverría. Cubre la operación completa de un banco:
+            clientes y cuentas, depósitos, transferencias, favoritos, compra de productos y servicios
+            del propio banco, conversión de divisas y auditoría de movimientos.
+          </p>
+          <p>
+            El encargo no era entregar un CRUD, sino un sistema repartido en servicios independientes
+            que se pudiera desplegar de verdad. Hoy está en línea: el panel corre en Firebase Hosting,
+            los backends en Vercel y las bases de datos en Supabase y MongoDB Atlas.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">El problema</h2>
+          <p>
+            Un banco no perdona los errores de consistencia: si una transferencia descuenta de una
+            cuenta y falla al acreditar en la otra, el dinero desaparece. A eso se sumaba que cuatro
+            dominios muy distintos —identidad, cuentas, movimientos y catálogo— tenían que evolucionar
+            en paralelo sin que los integrantes del equipo se pisaran entre sí.
+          </p>
+          <p>
+            El reto, entonces, era doble: separar esos dominios en servicios con su propia base de
+            datos pero con una identidad y una sesión compartidas, y garantizar que ninguna operación
+            financiera pudiera quedarse a medias.
+          </p>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Mi rol</h2>
+          <p>Trabajé en dos frentes: la coordinación del equipo y el desarrollo.</p>
+          <ul class="case-list">
+            <li>Como <strong>Scrum Master</strong>, facilité las ceremonias, mantuve el backlog y traduje los requisitos del proyecto en tareas repartibles entre los integrantes.</li>
+            <li>Desarrollé el microservicio de <strong>cuentas bancarias</strong> (<code>server-admin</code>): alta y baja lógica de cuentas, reactivación automática, y el endpoint de validación de cuenta destino que consume el servicio de movimientos.</li>
+            <li>Desarrollé el microservicio de <strong>productos y servicios</strong> (<code>server-products</code>): catálogo con imágenes en Cloudinary, órdenes de compra y el ciclo de vida de la orden con devolución de stock y reembolso.</li>
+            <li>Participé en el <strong>panel web</strong> en React y en la <strong>app móvil</strong> en React Native.</li>
+            <li>Me encargué de la <strong>puesta en producción</strong> de toda la plataforma.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal style="max-width:none">
+          <h2 class="case-section__title">La arquitectura</h2>
+          <p style="max-width:74ch">
+            Cuatro microservicios y dos clientes. Cada servicio tiene su propio dominio y su propia base
+            de datos, y todos comparten el mismo <strong>JWT</strong>: un token emitido por el servicio
+            de autenticación es válido en los otros tres sin necesidad de consultarlo, porque comparten
+            secreto, <em>issuer</em> y <em>audience</em>.
+          </p>
+
+          <div class="case-arch">
+            <div class="case-arch__item">
+              <p class="case-arch__name">auth-service</p>
+              <p class="case-arch__stack">.NET 8 · PostgreSQL</p>
+              <p class="case-arch__desc">
+                Identidad del sistema: login, roles, perfil y verificación por correo. Clean Architecture,
+                contraseñas con Argon2 y JWT con <em>refresh token</em> rotativo.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">server-admin</p>
+              <p class="case-arch__stack">Node · Express · MongoDB</p>
+              <p class="case-arch__desc">
+                Cuentas bancarias: número aleatorio de 10 dígitos, datos del titular, baja lógica y
+                validación de la cuenta destino en las transferencias.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">movimientos-bancarios</p>
+              <p class="case-arch__stack">Node · Express · MongoDB</p>
+              <p class="case-arch__desc">
+                El corazón financiero: depósitos, transferencias, compras, favoritos, historial, ranking
+                y divisas. Aquí vive la contabilidad y los saldos.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">server-products</p>
+              <p class="case-arch__stack">Node · Express · MongoDB</p>
+              <p class="case-arch__desc">
+                Catálogo de productos y servicios exclusivos del banco, con imágenes en Cloudinary, y
+                el procesamiento de las órdenes de compra.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">client-admin</p>
+              <p class="case-arch__stack">React 19 · Vite · Zustand</p>
+              <p class="case-arch__desc">
+                Una sola SPA con dos experiencias según el rol: panel de administración del banco y
+                vista personal del cliente.
+              </p>
+            </div>
+            <div class="case-arch__item">
+              <p class="case-arch__name">client-user</p>
+              <p class="case-arch__stack">Expo · React Native</p>
+              <p class="case-arch__desc">
+                App móvil para clientes sobre los mismos cuatro backends: saldo, transferencias,
+                favoritos, tienda y perfil con foto.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Decisiones técnicas</h2>
+          <ul class="case-list">
+            <li>
+              <strong>Doble partida contable.</strong> Cada operación genera dos asientos —débito y
+              crédito— dentro de un mismo movimiento, como en la contabilidad real. El saldo no se
+              «edita»: se deriva de los asientos.
+            </li>
+            <li>
+              <strong>Transacciones ACID en MongoDB.</strong> Las operaciones que tocan varias cuentas
+              corren dentro de una transacción, que MongoDB solo permite en modo <em>replica set</em>.
+              El sistema detecta al arrancar qué tipo de MongoDB tiene delante y, si es <em>standalone</em>,
+              cae a una compensación best-effort en lugar de romperse.
+            </li>
+            <li>
+              <strong>Saldos en centavos.</strong> Se guardan como entero para evitar los errores de
+              redondeo del punto flotante, pero la API los expone en quetzales mediante <em>getters</em>
+              de Mongoose: los clientes nunca multiplican ni dividen por 100.
+            </li>
+            <li>
+              <strong>Token relay en las compras.</strong> Cuando un cliente compra, el servicio de
+              productos propaga su cabecera de autorización al de movimientos, de modo que el débito
+              se ejecuta con la identidad del cliente y no con una credencial de servicio.
+            </li>
+            <li>
+              <strong>Renovación de sesión transparente.</strong> El interceptor de Axios detecta un
+              401, pide un token nuevo, encola las peticiones que iban en vuelo y las reintenta. Si la
+              renovación falla, cierra la sesión.
+            </li>
+            <li>
+              <strong>Dos implementaciones del servicio de autenticación.</strong> Una en .NET 8 y otra
+              en Node, con el mismo contrato, la misma base de datos y el mismo secreto JWT: son
+              intercambiables cambiando una variable de entorno. En producción corre la de Node, porque
+              Vercel ejecuta funciones serverless.
+            </li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Las reglas del banco</h2>
+          <p>
+            Buena parte del trabajo fue traducir los requisitos del negocio en validaciones que ningún
+            camino del sistema pudiera saltarse.
+          </p>
+          <ul class="case-list">
+            <li>Transferencias de hasta Q2,000 por operación y Q10,000 acumulados al día, siempre contra el saldo disponible.</li>
+            <li>Los depósitos solo los registra un administrador y pueden revertirse dentro del primer minuto; pasado ese plazo se puede ajustar el monto, pero nunca eliminarlos.</li>
+            <li>Ingresos mensuales mínimos de Q100 para abrir cuenta; el administrador no puede tocar el DPI ni la contraseña del cliente.</li>
+            <li>Favoritos con alias para transferir en un paso, consulta de los últimos cinco movimientos y ranking de cuentas por actividad.</li>
+            <li>Baja lógica en todo el sistema: nada se borra físicamente, ni cuentas, ni usuarios, ni productos.</li>
+            <li>Conversión de divisas con tasas de cambio en vivo.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Puesta en producción</h2>
+          <p>
+            El sistema no se quedó en <code>localhost</code>. Todo el stack está desplegado y es
+            accesible públicamente.
+          </p>
+          <ul class="case-list">
+            <li>Panel web en <strong>Firebase Hosting</strong>, con reescritura de rutas para que el enrutador de la SPA resuelva del lado del cliente.</li>
+            <li>Los cuatro backends en <strong>Vercel</strong> como funciones serverless, cada uno con su configuración propia y sus secretos en variables de entorno, nunca en el repositorio.</li>
+            <li><strong>Supabase</strong> para PostgreSQL y <strong>MongoDB Atlas</strong> para las tres bases Mongo. Al ser Atlas un replica set, las transacciones reales funcionan sin configuración adicional.</li>
+            <li>CORS por lista blanca en los servicios de autenticación y cuentas, restringido al dominio del panel.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" data-reveal style="max-width:none">
+          <h2 class="case-section__title">Galería</h2>
+          <div class="case-gallery case-gallery--wide">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/bancario-login.jpg"
+              alt="Pantalla de acceso de NexusBank: a la izquierda el lema «Tu dinero, en buenas manos» y a la derecha el formulario de inicio de sesión." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/bancario-divisas.jpg"
+              alt="Monitoreo global de divisas: tasas de cambio en vivo frente al quetzal y simulador de operaciones cambiarias." loading="lazy">
+            <img class="case-gallery__img" data-zoomable src="../assets/img/projects/bancario-ranking.jpg"
+              alt="Ranking transaccional de NexusBank: las tres cuentas más activas con su desglose de transferencias, depósitos y compras." loading="lazy">
+          </div>
+        </section>
+
+        <section class="case-section" data-reveal>
+          <h2 class="case-section__title">Resultados y aprendizajes</h2>
+          <p>
+            El equipo entregó una plataforma bancaria completa y desplegada, con documentación
+            interactiva por servicio y una colección de 55 peticiones para probar la API de punta a
+            punta. Es el proyecto más ambicioso en el que he trabajado y el que más me enseñó sobre
+            sistemas distribuidos.
+          </p>
+          <p>
+            Lo que más me marcó fue descubrir que en un sistema repartido los problemas difíciles no
+            están dentro de cada servicio, sino <em>entre</em> ellos: qué pasa si el segundo servicio no
+            responde, cómo viaja la identidad del usuario de un salto al siguiente, y cómo se deja el
+            sistema en un estado consistente cuando algo falla a mitad de camino. Como Scrum Master
+            aprendí, además, que coordinar seis piezas y varias personas exige tanto criterio como
+            escribir el código.
+          </p>
+          <p>
+            Si lo continuara, endurecería el CORS de los dos servicios que todavía aceptan cualquier
+            origen y añadiría pruebas automatizadas sobre los flujos financieros, que hoy se validan a
+            mano con Postman.
+          </p>
+        </section>
+      </div>
+
+      <!-- NAVEGACIÓN ENTRE PROYECTOS -->
+      <nav class="case-nav" aria-label="Navegación entre proyectos">
+        <a class="case-nav__link" href="juego-del-ahorcado.html">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          <span><span class="dir">Anterior</span>Juego del Ahorcado</span>
+        </a>
+        <a class="case-nav__link case-nav__link--end" href="../index.html#proyectos">
+          <span><span class="dir">Ver</span>Todos los proyectos</span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="../index.html#inicio">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Alejandro Echeverría</span>
+          </a>
+          <p class="footer__brand-desc">Desarrollador Full Stack. Construyendo software con foco en la experiencia y la calidad.</p>
+        </div>
+        <div>
+          <p class="footer__col-title">Navegación</p>
+          <ul class="footer__links">
+            <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+            <li><a href="../index.html#habilidades">Habilidades</a></li>
+            <li><a href="../index.html#proyectos">Proyectos</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Enlaces</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/aleeche" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/alejandro-echeverr%C3%ADa-garrido-2888983a5/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="mailto:alejandroecheverria826@gmail.com">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
+        <span>Hecho con HTML, CSS y JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>
