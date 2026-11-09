@@ -243,8 +243,10 @@
     "ficha";
 }
 
-/* Retrato en "Sobre mí". El marco (borde + sombra) integra la foto de fondo
-   blanco en el canvas cálido; sin él se vería como un rectángulo recortado. */
+/* Retrato en "Sobre mí". La foto es un recorte con FONDO TRANSPARENTE (4:5),
+   así que el fondo lo pone el marco y sigue al tema: un velo de acento sobre la
+   superficie, a modo de estudio. Sin él, en oscuro la camiseta y el pelo (ambos
+   muy oscuros) se fundirían con la superficie y se perdería la silueta. */
 .about__photo {
   grid-area: photo;
   margin: 0 auto;
@@ -256,12 +258,17 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
+  /* Los hombros llegan al borde inferior: si algún día el marco recorta,
+     que sea por arriba (aire), nunca por abajo. */
+  object-position: 50% 100%;
   border-radius: var(--r-xl);
   border: 1px solid var(--hairline);
   box-shadow: var(--e3), var(--hi);
-  background: var(--surface);
+  background:
+    radial-gradient(130% 100% at 50% 42%, var(--accent-soft), transparent 78%),
+    var(--surface);
 }
 
 .about__body { grid-area: body; }
@@ -658,8 +665,10 @@
       "ficha ficha";
   }
   .about__photo { max-width: none; }
-  /* Párrafo centrado verticalmente junto al retrato: equilibra la fila
-     superior aunque el texto sea más corto que la foto. */
+  /* Retrato y párrafo centrados entre sí en vertical: equilibra la fila
+     superior sea cual sea el más alto (en tablet manda el texto; en escritorio,
+     la foto). Sin esto, en tablet queda un hueco bajo el retrato. */
+  .about__photo,
   .about__body { align-self: center; }
 
   /* La ficha pasa a barra horizontal a lo ancho: los datos se reparten en fila

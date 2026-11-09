@@ -86,4 +86,4 @@ También funciona en Netlify o Vercel arrastrando la carpeta (sitio estático).
 - 5 páginas de detalle en `proyectos/` (case studies de cada proyecto del portafolio).
 - Modo claro/oscuro, responsive (mobile-first) y accesibilidad base (skip-link, foco visible, `prefers-reduced-motion`).
 - Formulario de contacto conectado a Formspree.
-- Foto de Hero en `assets/img/programador-foto.png`.
+- Retrato de «Sobre mí» en `assets/img/programador-foto.webp` (WebP con transparencia, 433×541, 4:5). El fondo lo pone el marco en CSS (`.about__photo img`), así que sigue al tema claro/oscuro.
