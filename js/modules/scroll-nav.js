@@ -42,7 +42,12 @@ export function initScrollNav() {
     const step = (now) => {
       if (startTime === null) startTime = now;
       const t = Math.min(1, (now - startTime) / duration);
-      window.scrollTo(0, Math.round(startY + dist * easeInOutCubic(t)));
+      // behavior "instant" es imprescindible: `html { scroll-behavior: smooth }`
+      // (base.css, para el ancla nativa sin JS) convierte cada scrollTo "a secas"
+      // en otro scroll suave nativo. Las dos animaciones se pisaban: arranque casi
+      // parado, el salto llegaba ~1s tarde y la animación de llegada se disparaba
+      // con la página aún en movimiento.
+      window.scrollTo({ top: Math.round(startY + dist * easeInOutCubic(t)), behavior: "instant" });
       if (t < 1) {
         rafId = requestAnimationFrame(step);
       } else {
@@ -79,7 +84,12 @@ export function initScrollNav() {
       // Mismo hueco que el salto de ancla nativo (scroll-margin-top en CSS):
       // si no se descuenta, el destino queda tapado tras el header sticky.
       const scrollMarginTop = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
-      const targetY = Math.round(target.getBoundingClientRect().top + window.scrollY - scrollMarginTop);
+      // Se acota al rango desplazable real: la última sección (Contacto) no
+      // puede subir hasta el header, y sin el tope el easing "frenaba" contra
+      // el final de la página en vez de frenar suave.
+      const maxY = document.documentElement.scrollHeight - window.innerHeight;
+      const rawY = target.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+      const targetY = Math.round(Math.min(maxY, Math.max(0, rawY)));
       const direction = targetY > window.scrollY ? "down" : "up";
 
       animateTo(targetY, () => {

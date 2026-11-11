@@ -5,14 +5,19 @@
 /* ---------- HERO ---------- */
 .hero {
   /* Top más corto que el resto de secciones: el header ya aporta separación
-     propia: si el hero suma otro padding grande arriba se siente vacío.
-     Se pisa --section-pad-y (no solo padding-top) porque el scroll-margin-top
-     de `.section` se calcula a partir de esa variable: si no coincide con el
-     padding real, el salto al ancla #inicio queda corto y el header sticky
-     tapa el "Desarrollador Full Stack". */
+     propia: si el hero suma otro padding grande arriba se siente vacío. */
   --section-pad-y: clamp(20px, 3vw, 48px);
   padding-top: var(--section-pad-y);
   padding-bottom: clamp(48px, 8vw, 104px);
+  /* #inicio significa "arriba del todo", no "encabezado a 24px del header"
+     como el resto de secciones. La fórmula de `.section` dejaba aquí un hueco
+     de (padding − 24px): ~24px en escritorio y 0 en móvil, por eso solo se
+     notaba en computadora. El hero va justo debajo del header sticky, así que
+     su borde superior está a --header-h del inicio del documento: con ese
+     margen el destino es scrollY = 0 en cualquier breakpoint. Lo usan el salto
+     animado (scroll-nav.js lee este valor) y el ancla nativa al volver desde
+     una ficha de proyecto (../index.html#inicio). */
+  scroll-margin-top: var(--header-h);
 }
 
 .hero__grid {

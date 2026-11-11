@@ -58,10 +58,14 @@ export function initNav() {
   }
 
   /* --- Scroll-spy: resalta el enlace de la sección visible --- */
+  // Se observan TODAS las secciones de primer nivel, no solo las que tienen
+  // enlace: el estado activo tiene que depender solo de la posición. Si se
+  // observaran solo las enlazadas, al volver al hero (que no tiene enlace)
+  // ninguna sección observada entraría en la franja y se quedaría marcada la
+  // última ("Sobre mí"). Ahora el hero entra en la franja y, como ningún
+  // enlace apunta a #inicio, se desmarcan todos (igual que en la carga inicial).
   const spyLinks = [...document.querySelectorAll("[data-spy]")];
-  const sections = spyLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
+  const sections = spyLinks.length ? [...document.querySelectorAll("main > section[id]")] : [];
 
   if (sections.length && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
