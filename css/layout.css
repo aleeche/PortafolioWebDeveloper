@@ -450,9 +450,25 @@
   will-change: transform;
 }
 
-/* Glow ambiental que sigue al puntero (detrás del contenido) */
+/* Glow ambiental que sigue al puntero (detrás del contenido).
+   Vive en una capa a pantalla completa pegada arriba con sticky, no con
+   fixed: el cambio de tema captura el body (theme.js) y los elementos fixed
+   escapan de esa captura, así que el glow desaparecía durante el círculo y
+   volvía de golpe al terminar. Sticky sí viaja en la captura, y detrás del
+   contenido como siempre. Va la primera del body (js/modules/pointer.js):
+   su margen negativo anula su altura y no empuja nada. */
+.pointer-glow-layer {
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  height: 100vh;
+  margin-bottom: -100vh;
+  overflow: clip; /* el glow no asoma ni crea scroll fuera de la pantalla */
+  pointer-events: none;
+}
+
 .pointer-glow {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 600px;
@@ -460,7 +476,6 @@
   border-radius: 50%;
   background: radial-gradient(circle closest-side, var(--glow), transparent);
   pointer-events: none;
-  z-index: -1;
   opacity: 0;
   transition: opacity var(--dur) var(--ease);
   will-change: transform;

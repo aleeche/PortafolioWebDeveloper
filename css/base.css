@@ -33,8 +33,9 @@ html {
 body {
   /* El body pinta el lienzo porque el cambio de tema lo captura a él (no al
      documento, ver theme.js) y el fondo tiene que viajar en esa captura.
-     `isolation` lo hace contexto de apilamiento: así el glow del puntero
-     (z-index:-1, hijo del body) se pinta sobre este fondo y no detrás. */
+     `isolation` lo hace contexto de apilamiento: así la capa del glow del
+     puntero (z-index:-1, hija del body) se pinta sobre este fondo y no
+     detrás. */
   background-color: var(--canvas);
   isolation: isolate;
   color: var(--ink);

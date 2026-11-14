@@ -99,6 +99,10 @@ trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el he
   Va condicionado a `.js-nav` y con una **red de seguridad CSS** (animación con
   retardo que lo muestra) que el módulo desactiva al arrancar. Así, si el JS
   falla, nada se queda invisible.
+- **Cambio de tema (View Transitions):** se captura el `<body>`, no el documento.
+  Un elemento nuevo con `position: fixed` escapa de esa captura y parpadearía al
+  cambiar de tema: dale su propio `view-transition-name` (si va encima de todo)
+  o hazlo sticky dentro del flujo (si va detrás del contenido, como el glow).
 - **Probar animaciones:** sírvelo por HTTP y, para ver un fotograma concreto,
   pausa `document.getAnimations()` y fija `currentTime`. Las capturas de la
   extensión de Chrome «asientan» las animaciones y fotografían el estado final.

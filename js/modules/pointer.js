@@ -13,10 +13,15 @@ export function initPointerGlow() {
   if (!fine) return;
 
   const SIZE = 600;
+  // Capa sticky a pantalla completa (ver «Glow ambiental» en layout.css). Va
+  // la primera del body: sticky solo se pega arriba desde su sitio en el flujo.
+  const layer = document.createElement("div");
+  layer.className = "pointer-glow-layer";
+  layer.setAttribute("aria-hidden", "true");
   const glow = document.createElement("div");
   glow.className = "pointer-glow";
-  glow.setAttribute("aria-hidden", "true");
-  document.body.appendChild(glow);
+  layer.appendChild(glow);
+  document.body.prepend(layer);
 
   let x = 0;
   let y = 0;

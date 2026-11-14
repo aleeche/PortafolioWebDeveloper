@@ -157,6 +157,18 @@ body {
   view-transition-name: page;
 }
 
+/* Los elementos position:fixed escapan de la captura del body: sin capa
+   propia desaparecerían mientras dura el círculo y volverían de golpe al
+   terminar (un parpadeo). La barra de progreso, que va encima de todo, lleva
+   su propia capa con nombre fijo. El glow del puntero no puede (su capa
+   quedaría sobre el texto y teñiría las tarjetas): por eso ya no es fixed
+   sino sticky (layout.css) y viaja dentro de la captura del body. El panel
+   del menú móvil tampoco puede ir en capa propia sin desordenar las capas:
+   con el menú abierto, theme.js cambia el tema al instante. */
+.scroll-progress {
+  view-transition-name: scroll-progress;
+}
+
 /* Fuera el fundido cruzado por defecto: la vieja se queda quieta y la nueva
    entra solo por el recorte circular. El círculo es una animación CSS y no
    un element.animate() lanzado al resolverse `ready`: así se aplica desde el
@@ -391,6 +403,12 @@ textarea.field__control {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  /* Al recargar, Chrome restaura la posición respecto a un elemento de
+     referencia (scroll anchoring) y mide su caja CON el transform. Si elegía
+     un bloque ya revelado, tras recargar ese bloque vuelve a nacer 22px más
+     abajo y la vista bajaba 22px en cada recarga. Fuera de la selección:
+     se apoya en las secciones, que no se mueven. */
+  overflow-anchor: none;
 }
 
 .js-nav [data-reveal].is-visible {

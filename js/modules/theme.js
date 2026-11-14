@@ -58,7 +58,11 @@ export function initTheme() {
     if (switching) return;
     const dark = !isDark();
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (typeof document.startViewTransition !== "function" || reduceMotion) {
+    // Con el menú móvil abierto, cambio inmediato: su panel y su fondo son
+    // position:fixed, no viajan en la captura del body y desaparecerían
+    // mientras dura el círculo.
+    const menuOpen = document.querySelector("[data-nav].is-open");
+    if (typeof document.startViewTransition !== "function" || reduceMotion || menuOpen) {
       applyTheme(dark, toggle);
       return;
     }
