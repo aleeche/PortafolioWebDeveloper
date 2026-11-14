@@ -5,8 +5,9 @@
  *
  * El cambio se revela con un círculo que nace del botón y crece hasta cubrir
  * la pantalla (View Transitions API): el navegador fotografía la página con
- * el tema viejo, aplica el nuevo y aquí se anima el recorte de la vista nueva
- * (CSS en «Toggle de tema», components.css). Sin soporte o con
+ * el tema viejo, aplica el nuevo y revela la vista nueva con un recorte
+ * circular animado en CSS (@keyframes theme-reveal, «Toggle de tema» en
+ * components.css); aquí solo se calculan centro y radio. Sin soporte o con
  * prefers-reduced-motion, el cambio es inmediato.
  *
  * Se captura el <body> y no el documento (la captura «root» por defecto).
@@ -20,8 +21,7 @@
 const KEY = "ae-theme";
 const root = document.documentElement;
 
-const REVEAL_MS = 500;
-const REVEAL_EASE = "ease-in-out";
+const REVEAL_MS = 500; // = duración de @keyframes theme-reveal (components.css)
 
 const isDark = () => root.getAttribute("data-theme") === "dark";
 
@@ -49,7 +49,13 @@ export function initTheme() {
 
   syncPressed(toggle);
 
+  // Un toque durante el círculo cortaría de golpe la transición en curso y
+  // el tema entero aparecería de una vez (un destello): se ignora hasta que
+  // termine (medio segundo).
+  let switching = false;
+
   toggle.addEventListener("click", () => {
+    if (switching) return;
     const dark = !isDark();
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (typeof document.startViewTransition !== "function" || reduceMotion) {
@@ -67,36 +73,31 @@ export function initTheme() {
       Math.max(y, window.innerHeight - y)
     );
     // El recorte se aplica a la captura del body, cuyo origen es su esquina
-    // superior (el principio del documento, no el de la pantalla).
+    // superior (el principio del documento, no el de la pantalla). La
+    // animación es CSS (@keyframes theme-reveal): aquí solo se le pasan
+    // centro y radio.
     const page = document.body.getBoundingClientRect();
-    const cx = x - page.left;
-    const cy = y - page.top;
+    root.style.setProperty("--reveal-x", `${x - page.left}px`);
+    root.style.setProperty("--reveal-y", `${y - page.top}px`);
+    root.style.setProperty("--reveal-r", `${radius}px`);
 
     // Mientras dura el cambio, sin transiciones de color: dentro del círculo
     // tiene que verse ya el tema nuevo, no un fundido desde el viejo.
+    switching = true;
     root.classList.add("theme-switching");
     const transition = document.startViewTransition(() => applyTheme(dark, toggle));
-    const cleanUp = () => root.classList.remove("theme-switching");
-    transition.finished.then(cleanUp, cleanUp);
 
-    transition.ready
-      .then(() => {
-        root.animate(
-          {
-            clipPath: [
-              `circle(0px at ${cx}px ${cy}px)`,
-              `circle(${radius}px at ${cx}px ${cy}px)`,
-            ],
-          },
-          {
-            duration: REVEAL_MS,
-            easing: REVEAL_EASE,
-            pseudoElement: "::view-transition-new(page)",
-          }
-        );
-      })
-      .catch(() => {
-        /* transición omitida (p. ej. pestaña oculta): el tema ya se aplicó */
-      });
+    let done = false;
+    const cleanUp = () => {
+      if (done) return;
+      done = true;
+      switching = false;
+      root.classList.remove("theme-switching");
+    };
+    transition.finished.then(cleanUp, cleanUp);
+    // Red de seguridad: si `finished` no llegara, el botón no se queda bloqueado.
+    window.setTimeout(cleanUp, REVEAL_MS + 1500);
+    // Si se omite (p. ej. pestaña oculta) el tema ya está aplicado: sin ruido.
+    transition.ready.catch(() => {});
   });
 }

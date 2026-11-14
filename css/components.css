@@ -157,12 +157,29 @@ body {
   view-transition-name: page;
 }
 
-/* Fuera el fundido cruzado por defecto: la vista nueva entra solo por el
-   recorte circular que anima el JS, sobre la vieja, que se queda quieta. */
-::view-transition-old(page),
-::view-transition-new(page) {
+/* Fuera el fundido cruzado por defecto: la vieja se queda quieta y la nueva
+   entra solo por el recorte circular. El círculo es una animación CSS y no
+   un element.animate() lanzado al resolverse `ready`: así se aplica desde el
+   primer fotograma de la transición (sin un fotograma con el tema nuevo
+   entero, que en móvil se veía como un destello) y, con fill `both`, se
+   mantiene completo hasta el final. Centro y radio los fija theme.js. */
+::view-transition-old(page) {
   animation: none;
   mix-blend-mode: normal;
+}
+
+::view-transition-new(page) {
+  mix-blend-mode: normal;
+  animation: theme-reveal 500ms ease-in-out both;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--reveal-x, 50%) var(--reveal-y, 0px));
+  }
+  to {
+    clip-path: circle(var(--reveal-r, 150vmax) at var(--reveal-x, 50%) var(--reveal-y, 0px));
+  }
 }
 
 /* Durante el cambio, ninguna transición (html y body funden su color en
