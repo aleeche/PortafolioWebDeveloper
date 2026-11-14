@@ -18,8 +18,8 @@ html {
   /* Permite scroll normal en ambos ejes pero bloquea el pellizco (pinch-zoom):
      el zoom por accesibilidad (controles del navegador) sigue disponible. */
   touch-action: pan-x pan-y;
-  /* El fondo vive en :root para que el glow del puntero (z-index:-1) asome
-     por el lienzo sin quedar oculto tras el fondo del body. */
+  /* El lienzo lo pinta también :root: cubre las zonas de rebote del scroll
+     y cualquier hueco que el body no llegue a tapar. */
   background-color: var(--canvas);
   transition: background-color var(--dur) var(--ease);
 }
@@ -31,14 +31,19 @@ html {
 }
 
 body {
-  background-color: transparent; /* el fondo lo pinta :root (ver arriba) */
+  /* El body pinta el lienzo porque el cambio de tema lo captura a él (no al
+     documento, ver theme.js) y el fondo tiene que viajar en esa captura.
+     `isolation` lo hace contexto de apilamiento: así el glow del puntero
+     (z-index:-1, hijo del body) se pinta sobre este fondo y no detrás. */
+  background-color: var(--canvas);
+  isolation: isolate;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: color var(--dur) var(--ease);
+  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
 
 /* Media */

@@ -13,6 +13,9 @@
  * Capturando el documento, Chrome Android mide las posiciones sticky contra
  * el área de captura, que se extiende bajo su barra de direcciones: con la
  * barra visible, el header quedaba tapado por ella mientras duraba el círculo.
+ * Los nombres de captura y el fondo del body son fijos (CSS): al terminar no
+ * cambia ningún estilo, para que la página no se recomponga en el último
+ * fotograma (en móvil, un parpadeo).
  */
 const KEY = "ae-theme";
 const root = document.documentElement;
@@ -69,9 +72,8 @@ export function initTheme() {
     const cx = x - page.left;
     const cy = y - page.top;
 
-    // Mientras dura el cambio: el body es la capa capturada y no hay
-    // transiciones de color (dentro del círculo tiene que verse ya el tema
-    // nuevo, no un fundido desde el viejo).
+    // Mientras dura el cambio, sin transiciones de color: dentro del círculo
+    // tiene que verse ya el tema nuevo, no un fundido desde el viejo.
     root.classList.add("theme-switching");
     const transition = document.startViewTransition(() => applyTheme(dark, toggle));
     const cleanUp = () => root.classList.remove("theme-switching");

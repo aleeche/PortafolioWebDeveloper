@@ -145,15 +145,16 @@
    «root» por defecto), Chrome Android mide las posiciones sticky contra el
    área de captura, que se extiende bajo su barra de direcciones, y con la
    barra visible el header quedaba tapado mientras duraba el círculo.
-   El lienzo vive en :root (ver base.css), que ya no viaja en la captura:
-   durante el cambio lo pinta también el body. */
-.theme-switching {
+   Los nombres son fijos, no solo durante el cambio: así, al terminar, no
+   cambia ningún estilo y la página no tiene que recomponerse en el último
+   fotograma (en móvil eso se veía como un parpadeo). Por lo mismo, el body
+   pinta siempre el lienzo y está siempre aislado (base.css). */
+:root {
   view-transition-name: none;
 }
 
-.theme-switching body {
+body {
   view-transition-name: page;
-  background-color: var(--canvas);
 }
 
 /* Fuera el fundido cruzado por defecto: la vista nueva entra solo por el
@@ -167,7 +168,8 @@
 /* Durante el cambio, ninguna transición (html y body funden su color en
    240 ms): dentro del círculo tiene que verse ya el tema nuevo. El
    !important está justificado: debe ganar a cualquier `transition` de los
-   componentes, y solo vive lo que dura el cambio. */
+   componentes, y solo vive lo que dura el cambio. Es lo único que la clase
+   cambia: quitarla al final no altera nada visible. */
 .theme-switching,
 .theme-switching *,
 .theme-switching *::before,
