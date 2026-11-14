@@ -141,27 +141,25 @@
 }
 
 /* Cambio de tema con círculo (js/modules/theme.js + View Transitions API).
-   Fuera el fundido cruzado por defecto: la vista nueva entra solo por el
-   recorte circular que anima el JS, sobre la vieja, que se queda quieta.
-   Dos capas: la página (root) y el header, capturado aparte solo durante el
-   cambio (en móvil, dentro de la captura de la página, la barra de
-   direcciones lo tapaba). Solo durante el cambio porque un
-   view-transition-name aísla al header y su desenfoque (backdrop-filter)
-   dejaría de ver el contenido que pasa por debajo: el texto de la página se
-   transparentaría nítido a través de él. Por eso, mientras dura el cambio,
-   su fondo es opaco. */
-.theme-switching .header {
-  view-transition-name: site-header;
+   Se captura el body en vez del documento: capturando el documento (la capa
+   «root» por defecto), Chrome Android mide las posiciones sticky contra el
+   área de captura, que se extiende bajo su barra de direcciones, y con la
+   barra visible el header quedaba tapado mientras duraba el círculo.
+   El lienzo vive en :root (ver base.css), que ya no viaja en la captura:
+   durante el cambio lo pinta también el body. */
+.theme-switching {
+  view-transition-name: none;
 }
 
-.theme-switching .header::before {
-  background: var(--surface);
+.theme-switching body {
+  view-transition-name: page;
+  background-color: var(--canvas);
 }
 
-::view-transition-old(root),
-::view-transition-new(root),
-::view-transition-old(site-header),
-::view-transition-new(site-header) {
+/* Fuera el fundido cruzado por defecto: la vista nueva entra solo por el
+   recorte circular que anima el JS, sobre la vieja, que se queda quieta. */
+::view-transition-old(page),
+::view-transition-new(page) {
   animation: none;
   mix-blend-mode: normal;
 }
