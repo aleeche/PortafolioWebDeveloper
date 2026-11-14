@@ -140,6 +140,26 @@
   display: inline-block;
 }
 
+/* Cambio de tema con círculo (js/modules/theme.js + View Transitions API).
+   Fuera el fundido cruzado por defecto: la vista nueva entra solo por el
+   recorte circular que anima el JS, sobre la vieja, que se queda quieta. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Durante el cambio, ninguna transición (html y body funden su color en
+   240 ms): dentro del círculo tiene que verse ya el tema nuevo. El
+   !important está justificado: debe ganar a cualquier `transition` de los
+   componentes, y solo vive lo que dura el cambio. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
 /* ---------- Enlaces sociales ---------- */
 .social {
   display: flex;
@@ -328,20 +348,35 @@ textarea.field__control {
   font-weight: 500;
 }
 
-/* ---------- Animación de entrada (scroll reveal) ---------- */
-[data-reveal] {
+/* ---------- Animación de entrada (scroll reveal) ----------
+   Solo se oculta con JS (.js-nav la pone el <head>): sin JS, todo visible.
+   Si el JS está activo pero main.js no llega a ejecutarse (error de red,
+   navegador sin módulos…), la red de seguridad muestra el contenido a los
+   3,5 s. reveal.js la desactiva al arrancar con `.reveal-ready`. */
+.js-nav [data-reveal] {
   opacity: 0;
   transform: translateY(22px);
   transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
 }
 
-[data-reveal].is-visible {
+.js-nav [data-reveal].is-visible {
   opacity: 1;
   transform: none;
 }
 
+.js-nav:not(.reveal-ready) [data-reveal] {
+  animation: reveal-failsafe 1ms linear 3.5s forwards;
+}
+
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
+  .js-nav [data-reveal] {
     opacity: 1;
     transform: none;
   }

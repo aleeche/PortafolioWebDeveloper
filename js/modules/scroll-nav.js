@@ -77,6 +77,25 @@ export function initScrollNav() {
     link.addEventListener("click", (e) => {
       const hash = link.getAttribute("href");
       if (!hash || hash === "#") return;
+
+      // «#top» es el fragmento estándar de HTML para el principio del
+      // documento: sin JS ya funciona solo y no exige un id en cada página
+      // («Volver arriba» del footer). Aquí recibe el mismo easing que el resto.
+      if (hash === "#top") {
+        e.preventDefault();
+        const first = document.querySelector("main section");
+        animateTo(0, () => {
+          // Sin hash: si quedaba uno (#contacto…), recargar ya no devolvería
+          // al usuario abajo. Y sin entrada nueva en el historial.
+          history.replaceState(null, "", location.pathname + location.search);
+          if (!first) return;
+          first.setAttribute("tabindex", "-1");
+          first.focus({ preventScroll: true });
+          playArrival(first, "up");
+        });
+        return;
+      }
+
       const target = document.getElementById(hash.slice(1));
       if (!target) return;
 

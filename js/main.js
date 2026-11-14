@@ -10,17 +10,23 @@ import { initScrollFx } from "./modules/scroll-fx.js";
 import { initPointerGlow } from "./modules/pointer.js";
 import { initLightbox } from "./modules/lightbox.js";
 import { initPageTransition } from "./modules/transition.js";
+import { initIntro } from "./modules/intro.js";
+import { initSignature } from "./modules/signature.js";
 
 function start() {
+  // La intro va primero: bloquea el scroll y decide cuándo entra el contenido.
+  const contentReady = initIntro();
+
   initPageTransition();
   initTheme();
   initNav();
-  initReveal();
+  initReveal(contentReady);
   initForm();
   initScrollNav();
   initScrollFx();
   initPointerGlow();
   initLightbox();
+  initSignature();
 
   // Año dinámico en el footer
   const yearEl = document.getElementById("year");

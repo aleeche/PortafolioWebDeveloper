@@ -236,6 +236,127 @@
   }
 }
 
+/* Entrada escalonada del texto del hero: llega como una frase, no en bloque.
+   Solo en la columna de texto: el .hero-visual no lleva retardo porque su
+   transform lo comparte después el parallax (un retardo lo haría ir a
+   rebufo del scroll). */
+.hero__intro > [data-reveal]:nth-child(2) { transition-delay: 60ms; }
+.hero__intro > [data-reveal]:nth-child(3) { transition-delay: 120ms; }
+.hero__intro > [data-reveal]:nth-child(4) { transition-delay: 180ms; }
+.hero__intro > [data-reveal]:nth-child(5) { transition-delay: 240ms; }
+
+/* ============================================================
+   INTRO DE MARCA (solo landing, primera visita de la sesión)
+   La activa el script del <head> con .has-intro y la dirige
+   js/modules/intro.js. Sin esa clase la capa no existe a efectos
+   visuales, así que sin JS no aparece nunca.
+   ============================================================ */
+.intro {
+  display: none;
+}
+
+.has-intro .intro {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-intro);
+  display: grid;
+  place-items: center;
+  /* Red de seguridad: si intro.js no llega a ejecutarse, la capa se retira
+     sola. Cuando el módulo arranca, la anula con un estilo inline. */
+  animation: intro-failsafe-out 300ms var(--ease) 4s forwards;
+}
+
+.intro__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--canvas);
+}
+
+.intro__stage {
+  position: relative; /* por encima del fondo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 3vw, 30px);
+  padding-inline: var(--container-pad);
+}
+
+/* El viewBox coincide con el de --logo-ae (sin margen) para que la caja del
+   SVG mida igual que .brand__mark y el relevo al aterrizar sea exacto.
+   El trazo sobresale medio grosor: overflow visible para no recortarlo. */
+.intro__mark {
+  display: block;
+  width: clamp(84px, 13vw, 150px);
+  height: auto;
+  overflow: visible;
+  color: var(--accent);
+  transform-origin: 0 0; /* el vuelo se calcula desde la esquina */
+}
+
+/* Estado inicial oculto (sin trazo ni relleno): lo anima intro.js. */
+.intro__mark-path {
+  fill: currentColor;
+  fill-opacity: 0;
+  stroke: currentColor;
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+  stroke-dasharray: 1; /* pathLength="1" → el patrón cubre el contorno entero */
+  stroke-dashoffset: 1;
+}
+
+.intro__sheen {
+  stop-color: var(--sheen);
+}
+
+.intro__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 7vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em; /* el mismo que .brand: el relevo debe encajar */
+  color: var(--ink-strong);
+  white-space: nowrap;
+  perspective: 700px; /* profundidad para el giro de las letras */
+  transform-origin: 0 0;
+}
+
+/* Hasta que intro.js lo parte en letras, el nombre no se ve. */
+.intro__name:not(.is-split) {
+  visibility: hidden;
+}
+
+.intro__letter {
+  display: inline-block;
+  white-space: pre; /* conserva el ancho del espacio entre nombre y apellido */
+  opacity: 0;
+}
+
+/* La marca real del header espera oculta a que aterrice la de la intro.
+   Misma red de seguridad que la capa por si el JS no llega. */
+.has-intro:not(.intro-done) .header .brand {
+  opacity: 0;
+  animation: intro-failsafe-in 1ms linear 4s forwards;
+}
+
+/* La intro ya dibujó el monograma: el del hero aparece asentado. */
+.has-intro .hero-visual__mark-path {
+  animation: none;
+}
+
+@keyframes intro-failsafe-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-failsafe-in {
+  to {
+    opacity: 1;
+  }
+}
+
 /* ---------- SOBRE MÍ ---------- */
 .about__grid {
   display: grid;

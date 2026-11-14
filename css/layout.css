@@ -233,6 +233,106 @@
   font-size: var(--fs-sm);
 }
 
+/* «Volver arriba»: discreto como el resto del pie. La flecha se adelanta un
+   poco al gesto al pasar el puntero. El padding amplía la zona de toque y el
+   margen negativo lo compensa para no mover la fila. */
+.footer__to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-block: var(--sp-2);
+  margin-block: calc(var(--sp-2) * -1);
+  color: var(--ink-muted);
+}
+
+.footer__to-top i {
+  font-size: 0.85em;
+  transition: transform var(--dur) var(--ease);
+}
+
+.footer__to-top:hover {
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .footer__to-top:hover i {
+    transform: translateY(-3px);
+  }
+}
+
+/* ---------- Firma del footer ----------
+   El apellido a todo el ancho del contenedor y cortado por el borde inferior
+   de la página, como si se hundiera en ella. Decorativa (aria-hidden).
+   La cascada de letras la arma js/modules/signature.js. */
+
+/* La firma se apoya en el borde: el footer pierde su padding inferior. */
+.footer:has(.footer__signature) {
+  padding-bottom: 0;
+}
+
+.footer__signature {
+  container-type: inline-size; /* la palabra se dimensiona con su ancho */
+  margin-top: clamp(28px, 5vw, 56px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer__signature-word {
+  /* Ancho de la palabra en em: «Echeverría» en Space Grotesk 700 con este
+     letter-spacing mide 4.666em; 4.7 deja un pelo de aire para que el último
+     glifo no roce el borde. Con él, 100cqi / ratio la ajusta al ancho. Si
+     cambia la palabra o la fuente, hay que volver a medirlo. */
+  --sig-ratio: 4.7;
+  height: 0.76em; /* recorta el pie de las letras: el «hundimiento» */
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18vw; /* respaldo sin container queries */
+  font-size: calc(100cqi / var(--sig-ratio));
+  line-height: 1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+/* Degradado del acento que se disuelve hacia abajo. Va en el bloque mientras
+   no está partido (sin JS) y en cada letra cuando lo está: así el degradado
+   viaja con la letra al subir. */
+.footer__signature-word {
+  color: var(--accent); /* respaldo sin background-clip: text */
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .footer__signature-word:not(.is-split),
+  .footer__signature-letter {
+    background: linear-gradient(to bottom,
+        var(--accent) 22%,
+        color-mix(in srgb, var(--accent) 12%, transparent) 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.footer__signature-letter {
+  display: inline-block;
+  vertical-align: top;
+  /* El texto recortado solo se pinta dentro de la caja de la letra, y el
+     letter-spacing negativo la estrecha más que el glifo. Este relleno
+     (compensado con margen negativo) le da aire sin mover nada. */
+  padding: 0.1em 0.05em 0;
+  margin: -0.1em -0.05em 0;
+}
+
+.footer__signature-word.is-armed .footer__signature-letter {
+  transform: translateY(105%);
+}
+
+.footer__signature-word.is-armed.is-in .footer__signature-letter {
+  transform: none;
+  transition: transform 900ms cubic-bezier(.215, .61, .355, 1) calc(var(--i, 0) * 50ms);
+}
+
 /* ---------- Responsive: menú móvil ---------- */
 @media (max-width: 1080px) {
   .nav-toggle {

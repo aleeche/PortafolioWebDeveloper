@@ -47,6 +47,9 @@
      mágico cada vez que se dimensiona la marca. */
   --logo-ae-ratio: 1.4566;
 
+  /* Destello que cruza el monograma en la intro (luz, no color de marca). */
+  --sheen: rgba(255, 255, 255, .55);
+
   /* --- Sombras (soft UI: suaves + brillo superior) --- */
   --hi: inset 0 1px 0 rgba(255, 255, 255, .75);
   --e1: 0 1px 2px rgba(38, 34, 28, .05), 0 2px 8px rgba(38, 34, 28, .04);
@@ -104,6 +107,7 @@
   --z-menu: 200;
   --z-modal: 1000;
   --z-veil: 2000;
+  --z-intro: 2100; /* la intro tapa incluso el velo de transición */
 }
 
 /* ============================================================
@@ -134,6 +138,9 @@
 
   /* Mismo valor que en claro: los logos de clientes no se invierten. */
   --logo-plate: #FCFBF9;
+
+  /* Sobre el acento lavanda del oscuro, un brillo más contenido. */
+  --sheen: rgba(255, 255, 255, .4);
 
   --hi: inset 0 1px 0 rgba(255, 255, 255, .05);
   --e1: 0 1px 2px rgba(0, 0, 0, .40), 0 2px 8px rgba(0, 0, 0, .30);

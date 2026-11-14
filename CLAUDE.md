@@ -54,13 +54,16 @@ css/
   case-study.css           # Estilos de las páginas de detalle
 js/
   main.js                  # Punto de entrada (type="module")
-  modules/theme.js         # Modo claro/oscuro
+  modules/theme.js         # Modo claro/oscuro (revelado circular, View Transitions)
   modules/nav.js           # Menú móvil + sombra header + scroll-spy
   modules/reveal.js        # Animación de entrada (IntersectionObserver)
   modules/form.js          # Validación + envío del formulario (Formspree AJAX)
   modules/scroll-nav.js    # Salto suave y direccional al pulsar el nav
   modules/scroll-fx.js     # Barra de progreso de lectura + parallax del hero
   modules/pointer.js       # Glow ambiental que sigue al puntero
+  modules/intro.js         # Intro de marca de la landing (1.ª visita de la sesión)
+  modules/signature.js     # Firma del footer (letras que suben en cascada)
+  modules/split-letters.js # Utilidad: parte un texto en <span> por letra
 assets/
   img/logo-ae.svg          # Monograma AE vectorizado (fuente de la marca)
   img/ · favicon/
@@ -68,12 +71,17 @@ assets/
 
 ### La marca (monograma AE)
 El logotipo es un **único contorno cerrado** (28 vértices, sin huecos): se dibuja
-sin levantar el lápiz. El hero aprovecha esa propiedad para trazarlo al cargar.
+sin levantar el lápiz. La intro de la landing aprovecha esa propiedad para
+trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el hero.
 
-- El trazado vive en dos sitios que hay que mantener sincronizados:
-  `assets/img/logo-ae.svg` (asset suelto) y el token `--logo-ae` de `tokens.css`,
-  que lo lleva como **máscara** en data-URI. Se usa máscara y no `<img>` para que
-  el color lo ponga el componente y siga al tema (claro/oscuro) sin duplicar archivos.
+- La fuente del trazado es `assets/img/logo-ae.svg`. Hay copias que mantener
+  sincronizadas: el token `--logo-ae` de `tokens.css`, que lo lleva como
+  **máscara** en data-URI (así el color lo pone el componente y sigue al tema sin
+  duplicar archivos), y los SVG en línea del hero y de la intro en `index.html`
+  (en línea porque se animan trazo a trazo).
+- La intro termina «aterrizando» sobre `.brand` del header: si cambia el tamaño,
+  la fuente o el `letter-spacing` de la marca, `.intro__name` debe seguir
+  compartiendo fuente y `letter-spacing` para que el relevo no dé un salto.
 - Los iconos (`assets/favicon/`) se generan con **escala óptica**: cuanto más
   pequeño se pinta el icono, más grande va la marca dentro de la placa
   (32 px → 400/512 · 180 px → 360/512 · 512 px → 350/512). Si se regeneran a
@@ -85,7 +93,15 @@ sin levantar el lápiz. El hero aprovecha esa propiedad para trazarlo al cargar.
   - ⚠️ Ojo con la cascada: `.btn` define `display`. Para ocultar botones usa selectores de doble clase (p.ej. `.nav .mi-boton`) que ganen a `.btn`.
 - **Mobile-first** (media/container queries de menor a mayor). El diseño se piensa desde desktop, pero el CSS crece de móvil hacia arriba.
 - **JS modular** (ES Modules), una responsabilidad por módulo; `main.js` orquesta. Mejora progresiva: el sitio funciona sin JS.
-- **Anti-FOUC:** un script inline en `<head>` fija el tema antes del primer pintado.
+- **Anti-FOUC:** un script inline en `<head>` fija el tema antes del primer pintado
+  (y en la landing decide si toca la intro: `.has-intro`).
+- **Animaciones con JS:** el estado oculto de partida nunca depende solo del CSS.
+  Va condicionado a `.js-nav` y con una **red de seguridad CSS** (animación con
+  retardo que lo muestra) que el módulo desactiva al arrancar. Así, si el JS
+  falla, nada se queda invisible.
+- **Probar animaciones:** sírvelo por HTTP y, para ver un fotograma concreto,
+  pausa `document.getAnimations()` y fija `currentTime`. Las capturas de la
+  extensión de Chrome «asientan» las animaciones y fotografían el estado final.
 - **Accesibilidad:** HTML semántico, `skip-link`, foco visible, `aria-*`, contraste AA, `prefers-reduced-motion`.
 
 ---

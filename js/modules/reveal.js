@@ -1,8 +1,16 @@
 /**
  * reveal.js — Animación de entrada al hacer scroll (IntersectionObserver).
  * Respeta prefers-reduced-motion: si está activo, muestra todo de inmediato.
+ *
+ * `ready`: promesa tras la que empieza a observar. La landing le pasa la de
+ * la intro para que el hero entre cuando el fondo de la intro se desvanece,
+ * no escondido debajo de ella.
  */
-export function initReveal() {
+export function initReveal(ready = Promise.resolve()) {
+  // Este módulo toma el relevo: desactiva la red de seguridad del CSS, que
+  // muestra el contenido sola si el JS nunca llega (ver components.css).
+  document.documentElement.classList.add("reveal-ready");
+
   const els = document.querySelectorAll("[data-reveal]");
   if (!els.length) return;
 
@@ -25,5 +33,5 @@ export function initReveal() {
     { rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
   );
 
-  els.forEach((el) => observer.observe(el));
+  ready.then(() => els.forEach((el) => observer.observe(el)));
 }

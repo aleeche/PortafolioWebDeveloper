@@ -29,7 +29,9 @@
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
 
   <!-- Anti-FOUC: aplica el tema guardado antes del primer pintado. Claro por defecto.
-       También marca que hay JS (js-nav) para activar el velo de transición. -->
+       También marca que hay JS (js-nav) para activar el velo de transición, y
+       decide si toca la intro de marca (has-intro): solo la primera visita de
+       la sesión, sin ancla en la URL y sin "reducir movimiento". -->
   <script>
     document.documentElement.classList.add("js-nav");
     (function () {
@@ -38,6 +40,13 @@
           document.documentElement.setAttribute("data-theme", "dark");
         }
       } catch (e) { /* sin localStorage: se queda en claro */ }
+      try {
+        if (!location.hash && !sessionStorage.getItem("ae-intro") &&
+            !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("has-intro");
+          sessionStorage.setItem("ae-intro", "1");
+        }
+      } catch (e) { /* sin sessionStorage: sin intro */ }
     })();
   </script>
 
@@ -63,6 +72,33 @@
   <!-- Velo de transición entre páginas (lo controla js/modules/transition.js).
        Sin JS nunca se muestra: la clase .js-nav la añade el script del <head>. -->
   <div class="page-veil" data-page-veil aria-hidden="true"></div>
+
+  <!-- Intro de marca (primera visita de la sesión). La activa el script del
+       <head> con .has-intro y la dirige js/modules/intro.js. Decorativa: el
+       nombre ya lo anuncian el <title>, el header y el hero.
+       El trazado del monograma es una copia de assets/img/logo-ae.svg. -->
+  <div class="intro" data-intro aria-hidden="true">
+    <div class="intro__backdrop"></div>
+    <div class="intro__stage">
+      <svg class="intro__mark" viewBox="0 0 100 68.65" focusable="false">
+        <defs>
+          <!-- El destello solo pinta dentro del monograma: recorte con su
+               misma geometría (reutiliza el trazado de abajo). -->
+          <clipPath id="intro-ae-clip"><use href="#intro-ae"/></clipPath>
+          <linearGradient id="intro-sheen" x1="0" y1="0" x2="1" y2="0">
+            <stop class="intro__sheen" offset="0" stop-opacity="0"/>
+            <stop class="intro__sheen" offset="0.5"/>
+            <stop class="intro__sheen" offset="1" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path id="intro-ae" class="intro__mark-path" pathLength="1" d="M40.48 0 42.86 2.38 55.16 25 56.35 24.6 60.32 17.06 100 17.06 95.24 25.4 66.27 25.4 58.33 38.89 84.52 38.89 82.94 42.46 79.76 47.22 52.78 47.22 45.24 59.52 83.73 59.92 83.33 61.51 78.57 68.65 29.76 68.65 50.4 34.52 40.87 17.86 28.57 38.1 28.57 38.89 44.44 38.89 40.08 46.83 23.02 47.22 10.32 68.65 0 68.65 34.92 10.71Z"/>
+        <g clip-path="url(#intro-ae-clip)">
+          <rect class="intro__glint" x="0" y="-6" width="18" height="82" fill="url(#intro-sheen)"/>
+        </g>
+      </svg>
+      <p class="intro__name">Alejandro Echeverría</p>
+    </div>
+  </div>
 
   <!-- ==================== HEADER ==================== -->
   <header class="header" data-header>
@@ -620,7 +656,13 @@
       </div>
       <div class="footer__bottom">
         <span>© <span id="year">2026</span> Alejandro Echeverría Garrido</span>
-        <span>Hecho con HTML, CSS y JavaScript</span>
+        <a class="footer__to-top" href="#top">Volver arriba <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+      </div>
+
+      <!-- Firma decorativa: las letras suben en cascada al entrar en pantalla
+           (js/modules/signature.js). Sin JS se ve quieta y completa. -->
+      <div class="footer__signature" aria-hidden="true">
+        <p class="footer__signature-word" data-signature>Echeverría</p>
       </div>
     </div>
   </footer>
