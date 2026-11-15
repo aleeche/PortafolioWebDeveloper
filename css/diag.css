@@ -1,0 +1,28 @@
+/* DIAGNÓSTICO TEMPORAL del parpadeo en móvil al cambiar de tema. Solo actúa con ?v=1, ?v=2 o ?v=3 en la URL (data-diag en <html>). Se elimina al terminar la prueba. */
+
+/* v1: tarjetas flotantes en pausa mientras dura el cambio de tema */
+[data-diag="1"].theme-switching .hero-visual__window,
+[data-diag="1"].theme-switching .hero-visual__chip,
+[data-diag="1"].theme-switching .hero-visual__badge {
+  animation-play-state: paused;
+}
+
+/* v2: visual del hero estático: sin flotación, sin parallax, sin máscara */
+[data-diag="2"] .hero-visual__window,
+[data-diag="2"] .hero-visual__chip,
+[data-diag="2"] .hero-visual__badge {
+  animation: none;
+}
+[data-diag="2"] .hero-visual,
+[data-diag="2"] .hero-visual__mark {
+  transform: none !important;
+}
+[data-diag="2"] .hero-visual__mark {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* v3: visual del hero vacío (conserva su hueco) */
+[data-diag="3"] .hero-visual > * {
+  display: none;
+}
