@@ -115,7 +115,9 @@
   color: var(--ink);
   box-shadow: var(--e1), var(--hi);
   cursor: pointer;
-  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+  /* opacity/visibility: se desvanece al abrir el menú móvil (layout.css). */
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease),
+    opacity var(--dur) var(--ease), visibility var(--dur) var(--ease);
 }
 
 /* Solo con puntero real: en táctil, :hover se queda pegado tras el toque y

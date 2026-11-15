@@ -128,7 +128,8 @@ export function initTheme() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // Con el menú móvil abierto, cambio inmediato: su panel y su fondo son
     // position:fixed, no viajan en la captura del body y desaparecerían
-    // mientras dura el círculo.
+    // mientras dura el círculo. (El botón se oculta al abrir el menú, pero
+    // mientras se desvanece todavía se puede pulsar.)
     const menuOpen = document.querySelector("[data-nav].is-open");
     if (typeof document.startViewTransition !== "function" || reduceMotion || menuOpen) {
       applyTheme(dark, toggle);
