@@ -103,6 +103,11 @@ trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el he
   Un elemento nuevo con `position: fixed` escapa de esa captura y parpadearía al
   cambiar de tema: dale su propio `view-transition-name` (si va encima de todo)
   o hazlo sticky dentro del flujo (si va detrás del contenido, como el glow).
+  Los bucles de animación CSS (`infinite`, como la flotación del hero) los
+  retira `theme.js` mientras dura el círculo y luego los reanuda en la misma
+  fase: en Chrome Android, una capa con animación compuesta dentro de la
+  captura hacía destellar el tema anterior a pantalla completa al terminar.
+  Pausarlos no basta.
 - **Probar animaciones:** sírvelo por HTTP y, para ver un fotograma concreto,
   pausa `document.getAnimations()` y fija `currentTime`. Las capturas de la
   extensión de Chrome «asientan» las animaciones y fotografían el estado final.

@@ -17,6 +17,12 @@
  * Los nombres de captura y el fondo del body son fijos (CSS): al terminar no
  * cambia ningún estilo, para que la página no se recomponga en el último
  * fotograma (en móvil, un parpadeo).
+ *
+ * Los bucles de animación CSS (la flotación de las tarjetas del hero) se
+ * retiran mientras dura el círculo: en Chrome Android, una capa con animación
+ * compuesta dentro de la captura hacía que al terminar se viera un fotograma
+ * con la captura vieja a pantalla completa (un destello del tema anterior).
+ * Pausarla no basta: la capa sigue ahí. Ver freezeLoops().
  */
 const KEY = "ae-theme";
 const root = document.documentElement;
@@ -41,6 +47,62 @@ function applyTheme(dark, toggle) {
     /* localStorage no disponible: el cambio sigue funcionando en la sesión */
   }
   syncPressed(toggle);
+}
+
+/**
+ * Retira los bucles de animación CSS en curso (iteraciones infinitas) sin que
+ * se note: cada elemento se queda fijo en su pose actual (commitStyles la
+ * escribe en su style en línea) y la animación desaparece de verdad, con su
+ * capa compuesta. Devuelve la función que los reanuda en la misma fase, así
+ * que el único rastro es una pausa de medio segundo.
+ */
+function freezeLoops() {
+  const loops = document.getAnimations().filter(
+    (a) =>
+      a instanceof CSSAnimation &&
+      a.playState === "running" &&
+      a.effect &&
+      a.effect.target &&
+      !a.effect.pseudoElement &&
+      a.effect.getComputedTiming().iterations === Infinity
+  );
+
+  // El style en línea original de cada elemento, antes de escribir la pose.
+  const originals = new Map();
+  for (const a of loops) {
+    const el = a.effect.target;
+    if (!originals.has(el)) originals.set(el, el.getAttribute("style"));
+  }
+
+  const frozen = [];
+  for (const a of loops) {
+    try {
+      a.commitStyles();
+      frozen.push({ el: a.effect.target, name: a.animationName, time: a.currentTime });
+    } catch (e) {
+      /* No se puede fijar su pose: ese bucle sigue como está */
+    }
+  }
+  const frozenEls = new Set(frozen.map((f) => f.el));
+  frozenEls.forEach((el) => {
+    el.style.animation = "none";
+  });
+
+  return () => {
+    frozenEls.forEach((el) => {
+      const style = originals.get(el);
+      if (style === null) el.removeAttribute("style");
+      else el.setAttribute("style", style);
+    });
+    // getAnimations() aplica los estilos: la animación CSS ya ha vuelto a
+    // nacer, y se adelanta a la fase en que se congeló (sin salto).
+    for (const { el, name, time } of frozen) {
+      const a = el
+        .getAnimations()
+        .find((x) => x instanceof CSSAnimation && x.animationName === name);
+      if (a && time !== null) a.currentTime = time;
+    }
+  };
 }
 
 export function initTheme() {
@@ -89,6 +151,7 @@ export function initTheme() {
     // tiene que verse ya el tema nuevo, no un fundido desde el viejo.
     switching = true;
     root.classList.add("theme-switching");
+    const resumeLoops = freezeLoops();
     const transition = document.startViewTransition(() => applyTheme(dark, toggle));
 
     let done = false;
@@ -97,6 +160,9 @@ export function initTheme() {
       done = true;
       switching = false;
       root.classList.remove("theme-switching");
+      // Los bucles vuelven dos fotogramas después: el relevo de la captura a
+      // la página real ya se ha pintado sin capas animadas.
+      requestAnimationFrame(() => requestAnimationFrame(resumeLoops));
     };
     transition.finished.then(cleanUp, cleanUp);
     // Red de seguridad: si `finished` no llegara, el botón no se queda bloqueado.

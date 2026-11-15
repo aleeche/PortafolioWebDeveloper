@@ -64,21 +64,6 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/sections.css">
-
-  <!-- DIAGNÓSTICO TEMPORAL (parpadeo en móvil al cambiar de tema): solo actúa
-       con ?v=4, ?v=5 o ?v=6 en la URL. Se elimina al terminar la prueba. -->
-  <link rel="stylesheet" href="css/diag.css?r=2">
-  <script>
-    (function () {
-      var v = new URLSearchParams(location.search).get("v");
-      if (!v) return;
-      document.documentElement.setAttribute("data-diag", v);
-      document.addEventListener("DOMContentLoaded", function () {
-        var e = document.querySelector(".hero .eyebrow");
-        if (e) e.textContent += " · v" + v;
-      });
-    })();
-  </script>
 </head>
 
 <body>
