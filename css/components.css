@@ -118,9 +118,13 @@
   transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  color: var(--accent);
+/* Solo con puntero real: en táctil, :hover se queda pegado tras el toque y
+   el botón seguiría elevado y en índigo hasta tocar otra cosa. */
+@media (hover: hover) {
+  .theme-toggle:hover {
+    transform: translateY(-2px);
+    color: var(--accent);
+  }
 }
 
 .theme-toggle svg {

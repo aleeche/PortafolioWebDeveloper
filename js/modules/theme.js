@@ -22,12 +22,18 @@
  * retiran mientras dura el círculo: en Chrome Android, una capa con animación
  * compuesta dentro de la captura hacía que al terminar se viera un fotograma
  * con la captura vieja a pantalla completa (un destello del tema anterior).
- * Pausarla no basta: la capa sigue ahí. Ver freezeLoops().
+ * Pausarla no basta: la capa sigue ahí. Tampoco basta con devolverla justo al
+ * terminar (dos fotogramas después seguía destellando): vuelve con margen,
+ * LOOPS_RESUME_MS después. Ver freezeLoops().
  */
 const KEY = "ae-theme";
 const root = document.documentElement;
 
 const REVEAL_MS = 500; // = duración de @keyframes theme-reveal (components.css)
+const LOOPS_RESUME_MS = 1500; // pausa de los bucles tras el círculo
+
+// Reanudación de bucles aún pendiente (timer + función), si la hay.
+let pendingResume = null;
 
 const isDark = () => root.getAttribute("data-theme") === "dark";
 
@@ -54,7 +60,7 @@ function applyTheme(dark, toggle) {
  * se note: cada elemento se queda fijo en su pose actual (commitStyles la
  * escribe en su style en línea) y la animación desaparece de verdad, con su
  * capa compuesta. Devuelve la función que los reanuda en la misma fase, así
- * que el único rastro es una pausa de medio segundo.
+ * que el único rastro es una pausa breve.
  */
 function freezeLoops() {
   const loops = document.getAnimations().filter(
@@ -151,7 +157,20 @@ export function initTheme() {
     // tiene que verse ya el tema nuevo, no un fundido desde el viejo.
     switching = true;
     root.classList.add("theme-switching");
-    const resumeLoops = freezeLoops();
+    // Si el cambio anterior aún no había devuelto los bucles, siguen
+    // congelados: su reanudación pasa a este cambio (nunca vuelven en mitad
+    // de un círculo).
+    let resumeLoops = freezeLoops();
+    if (pendingResume) {
+      window.clearTimeout(pendingResume.timer);
+      const previous = pendingResume.resume;
+      const fresh = resumeLoops;
+      resumeLoops = () => {
+        previous();
+        fresh();
+      };
+      pendingResume = null;
+    }
     const transition = document.startViewTransition(() => applyTheme(dark, toggle));
 
     let done = false;
@@ -160,9 +179,14 @@ export function initTheme() {
       done = true;
       switching = false;
       root.classList.remove("theme-switching");
-      // Los bucles vuelven dos fotogramas después: el relevo de la captura a
-      // la página real ya se ha pintado sin capas animadas.
-      requestAnimationFrame(() => requestAnimationFrame(resumeLoops));
+      const resume = resumeLoops;
+      pendingResume = {
+        resume,
+        timer: window.setTimeout(() => {
+          pendingResume = null;
+          resume();
+        }, LOOPS_RESUME_MS),
+      };
     };
     transition.finished.then(cleanUp, cleanUp);
     // Red de seguridad: si `finished` no llegara, el botón no se queda bloqueado.
