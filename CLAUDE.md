@@ -72,7 +72,8 @@ assets/
 ### La marca (monograma AE)
 El logotipo es un **único contorno cerrado** (28 vértices, sin huecos): se dibuja
 sin levantar el lápiz. La intro de la landing aprovecha esa propiedad para
-trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el hero.
+trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el hero
+(solo desde tablet: en celular la composición del hero no se muestra).
 
 - La fuente del trazado es `assets/img/logo-ae.svg`. Hay copias que mantener
   sincronizadas: el token `--logo-ae` de `tokens.css`, que lo lleva como

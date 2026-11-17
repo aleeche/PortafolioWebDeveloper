@@ -50,8 +50,12 @@
 }
 
 /* Visual gráfico del Hero (abstracción soft-UI "ventana de app").
-   Reemplazable por una foto: ver comentario en index.html */
+   Reemplazable por una foto: ver comentario en index.html
+   En celular (una columna) no se muestra: apilada bajo el texto ocupaba casi
+   una pantalla entera de pura decoración antes de «Sobre mí». Aparece desde
+   tablet, cuando el hero pasa a dos columnas y va al lado del texto. */
 .hero-visual {
+  display: none;
   position: relative;
   aspect-ratio: 1 / 1;
   max-width: 440px;
@@ -825,6 +829,7 @@
 
 @media (min-width: 760px) {
   .hero__grid { grid-template-columns: 1.05fr 0.95fr; }
+  .hero-visual { display: block; }
   .about__grid {
     grid-template-columns: minmax(240px, 280px) 1fr;
     grid-template-areas:
