@@ -79,9 +79,11 @@ trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el he
   **máscara** en data-URI (así el color lo pone el componente y sigue al tema sin
   duplicar archivos), y los SVG en línea del hero y de la intro en `index.html`
   (en línea porque se animan trazo a trazo).
-- La intro termina «aterrizando» sobre `.brand` del header: si cambia el tamaño,
-  la fuente o el `letter-spacing` de la marca, `.intro__name` debe seguir
-  compartiendo fuente y `letter-spacing` para que el relevo no dé un salto.
+- La intro termina con un **zoom de apertura al estilo de la app de X**: el
+  monograma pasa a ser un hueco en un telón (intro.js copia el trazado del SVG
+  de la intro, no hay otra copia) y crece hasta destapar la página. Escala
+  alrededor del punto más grueso del trazo (`POLE` en `intro.js`, calculado a
+  partir del trazado): si cambia `logo-ae.svg`, hay que recalcularlo.
 - Los iconos (`assets/favicon/`) se generan con **escala óptica**: cuanto más
   pequeño se pinta el icono, más grande va la marca dentro de la placa
   (32 px → 400/512 · 180 px → 360/512 · 512 px → 350/512). Si se regeneran a
@@ -114,6 +116,8 @@ trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el he
 - **Probar animaciones:** sírvelo por HTTP y, para ver un fotograma concreto,
   pausa `document.getAnimations()` y fija `currentTime`. Las capturas de la
   extensión de Chrome «asientan» las animaciones y fotografían el estado final.
+  Para la intro, borra también sus timers: su red de seguridad la retira a
+  los 7 s aunque esté en pausa.
 - **Accesibilidad:** HTML semántico, `skip-link`, foco visible, `aria-*`, contraste AA, `prefers-reduced-motion`.
 
 ---
