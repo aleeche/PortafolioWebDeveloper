@@ -318,6 +318,14 @@
   stop-color: var(--sheen);
 }
 
+/* En reposo, el destello espera fuera del monograma: en la pose del primer
+   fotograma de intro.js. En su sitio natural (x = 0) caía sobre la pata de la
+   A y, hasta que arrancaba la animación (carga del módulo y de la fuente), se
+   veía una astilla gris suelta sobre el fondo. */
+.intro__glint {
+  transform: translateX(-30px) skewX(-20deg);
+}
+
 .intro__name {
   margin: 0;
   font-family: var(--font-display);
