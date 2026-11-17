@@ -132,7 +132,6 @@
   border-radius: var(--r-xl);
   box-shadow: var(--e3), var(--hi);
   padding: 16px;
-  animation: floatA 7s ease-in-out infinite;
 }
 
 .hero-visual__bar {
@@ -178,7 +177,6 @@
   font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--ink-strong);
-  animation: floatB 6s ease-in-out infinite;
 }
 
 .hero-visual__chip .dot {
@@ -197,7 +195,6 @@
   border-radius: var(--r-lg);
   box-shadow: var(--e3);
   padding: 16px 20px;
-  animation: floatB 8s ease-in-out infinite;
 }
 
 .hero-visual__badge .num {
@@ -213,6 +210,25 @@
   margin-top: 3px;
 }
 
+/* Flotación de las tarjetas: solo con ratón/trackpad (el mismo criterio que
+   el glow de pointer.js) y sin «reducir movimiento». En táctil (celulares y
+   tablets) quedan quietas: en Chrome Android, cualquier capa con animación
+   compuesta dentro de la captura del cambio de tema hacía destellar el tema
+   anterior al terminar el círculo (ver theme.js). Sin bucles, no hay capa. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-visual__window {
+    animation: floatA 7s ease-in-out infinite;
+  }
+
+  .hero-visual__chip {
+    animation: floatB 6s ease-in-out infinite;
+  }
+
+  .hero-visual__badge {
+    animation: floatB 8s ease-in-out infinite;
+  }
+}
+
 @keyframes floatA {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
@@ -224,12 +240,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-visual__window,
-  .hero-visual__chip,
-  .hero-visual__badge {
-    animation: none;
-  }
-
   /* Doble clase: tiene que ganar a `.js-nav .hero-visual__mark-path`. */
   .js-nav .hero-visual__mark-path {
     animation: none;

@@ -25,6 +25,9 @@
  * Pausarla no basta: la capa sigue ahí. Tampoco basta con devolverla justo al
  * terminar (dos fotogramas después seguía destellando): vuelve con margen,
  * LOOPS_RESUME_MS después. Ver freezeLoops().
+ * Además, en táctil (celulares y tablets) la flotación ya ni existe (solo se
+ * activa con ratón, ver sections.css), así que allí freezeLoops() no tiene
+ * nada que retirar: no hay capa animada que pueda destellar.
  */
 const KEY = "ae-theme";
 const root = document.documentElement;

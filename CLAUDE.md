@@ -108,6 +108,9 @@ trazarlo (y entonces el del hero aparece ya asentado); sin intro, lo traza el he
   1,5 s después: en Chrome Android, una capa con animación compuesta dentro
   de la captura hacía destellar el tema anterior a pantalla completa al
   terminar. Pausarlos no basta, y devolverlos justo al terminar tampoco.
+  Por eso, además, en táctil (celulares y tablets) **no hay bucles**: la
+  flotación del hero solo existe con puntero fino (`hover: hover` y
+  `pointer: fine`). No añadas animaciones `infinite` que corran en móvil.
 - **Probar animaciones:** sírvelo por HTTP y, para ver un fotograma concreto,
   pausa `document.getAnimations()` y fija `currentTime`. Las capturas de la
   extensión de Chrome «asientan» las animaciones y fotografían el estado final.
